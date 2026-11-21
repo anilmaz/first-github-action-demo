@@ -10,24 +10,28 @@
   <style>
     :root {
       --bg-base: #f5f7fb;
-      --glass-bg: rgba(255, 255, 255, 0.76);
-      --glass-card: rgba(255, 255, 255, 0.84);
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-card: rgba(255, 255, 255, 0.86);
       --glass-border: rgba(30, 58, 138, 0.13);
-      --glass-shine: rgba(255, 255, 255, 0.78);
+      --glass-shine: rgba(255, 255, 255, 0.8);
 
       --ink-primary: #0f172a;
       --ink-secondary: #475569;
-      --accent-blue: #1d4ed8;
-      --accent-indigo: #4338ca;
-      --accent-purple: #6d28d9;
-      --accent-amber: #d97706;
-      --accent-teal: #0d9488;
-      --accent-emerald: #059669;
 
+      /* Distinct Metric Accents */
+      --cpu-color: #1d4ed8;
+      --cpu-soft: rgba(29, 78, 216, 0.12);
+      --mem-color: #6d28d9;
+      --mem-soft: rgba(109, 40, 217, 0.12);
+      --disk-color: #d97706;
+      --disk-soft: rgba(217, 119, 6, 0.13);
+      --net-color: #0d9488;
+      --net-soft: rgba(13, 148, 136, 0.12);
+
+      --accent-emerald: #059669;
       --shadow-elevated: 0 16px 40px rgba(15, 23, 42, 0.07), inset 0 1px 0 var(--glass-shine);
       --radius-xl: 20px;
-      --radius-lg: 15px;
-      --radius-md: 10px;
+      --radius-lg: 16px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,7 +49,6 @@
       line-height: 1.6;
     }
 
-    /* Sticky Glass Header */
     header {
       position: sticky;
       top: 0;
@@ -67,17 +70,13 @@
       gap: 1rem;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
+    .brand { display: flex; align-items: center; gap: 0.85rem; }
 
     .brand-mark {
       width: 40px;
       height: 40px;
       border-radius: 11px;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      background: linear-gradient(135deg, var(--cpu-color), var(--mem-color));
       color: #ffffff;
       display: grid;
       place-items: center;
@@ -87,19 +86,9 @@
       box-shadow: 0 8px 20px rgba(29, 78, 216, 0.24);
     }
 
-    .brand-name {
-      font-weight: 800;
-      font-size: 1.05rem;
-      letter-spacing: -0.02em;
-      color: var(--ink-primary);
-    }
+    .brand-name { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--ink-primary); }
+    .brand-tagline { font-size: 0.76rem; color: var(--ink-secondary); }
 
-    .brand-tagline {
-      font-size: 0.76rem;
-      color: var(--ink-secondary);
-    }
-
-    /* Underline Navigation Tabs */
     .tab-bar {
       display: flex;
       gap: 0.35rem;
@@ -122,8 +111,8 @@
 
     .tab-btn:hover,
     .tab-btn.active {
-      color: var(--accent-blue);
-      border-bottom-color: var(--accent-amber);
+      color: var(--cpu-color);
+      border-bottom-color: var(--disk-color);
     }
 
     .telemetry-pill {
@@ -140,29 +129,17 @@
     }
 
     .telemetry-pill.degraded {
-      background: rgba(217, 119, 6, 0.13);
-      color: var(--accent-amber);
-      border-color: rgba(217, 119, 6, 0.28);
+      background: var(--disk-soft);
+      color: var(--disk-color);
+      border-color: rgba(217, 119, 6, 0.3);
     }
 
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
-    /* Page Container */
-    main {
-      max-width: 1280px;
-      margin: 1.8rem auto 3.5rem;
-      padding: 0 1.5rem;
-    }
-
+    main { max-width: 1280px; margin: 1.8rem auto 3.5rem; padding: 0 1.5rem; }
     .view-panel { display: none; }
     .view-panel.active { display: block; }
 
-    /* Hero Surface */
     .hero-surface {
       background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 56%, #4c1d95 100%);
       color: #ffffff;
@@ -199,17 +176,9 @@
       margin-bottom: 0.55rem;
     }
 
-    .hero-surface p {
-      color: #cbd5e1;
-      font-size: 0.95rem;
-      max-width: 58ch;
-    }
+    .hero-surface p { color: #cbd5e1; font-size: 0.95rem; max-width: 58ch; }
 
-    .meta-matrix {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
+    .meta-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
     .meta-tile {
       background: rgba(255, 255, 255, 0.09);
@@ -235,61 +204,109 @@
       word-break: break-all;
     }
 
-    /* Live Metrics Grid */
+    /* 4 Distinctly Colored Metric Cards with Large Icons */
     .metrics-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+      gap: 1.25rem;
       margin-bottom: 1.5rem;
     }
 
     .metric-glass {
+      position: relative;
+      overflow: hidden;
       background: var(--glass-card);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      padding: 1.25rem 1.35rem;
+      padding: 1.3rem 1.35rem;
       box-shadow: var(--shadow-elevated);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
+    .metric-glass:hover { transform: translateY(-3px); }
+
+    .metric-glass::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .metric-cpu { border-color: rgba(29, 78, 216, 0.24); }
+    .metric-cpu::before { background: var(--cpu-color); }
+
+    .metric-mem { border-color: rgba(109, 40, 217, 0.24); }
+    .metric-mem::before { background: var(--mem-color); }
+
+    .metric-disk { border-color: rgba(217, 119, 6, 0.26); }
+    .metric-disk::before { background: var(--disk-color); }
+
+    .metric-net { border-color: rgba(13, 148, 136, 0.24); }
+    .metric-net::before { background: var(--net-color); }
+
+    .large-icon-box {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      margin-top: 0.15rem;
+    }
+
+    .large-icon-box svg {
+      width: 44px;
+      height: 44px;
+    }
+
+    .icon-cpu { background: var(--cpu-soft); color: var(--cpu-color); border: 1px solid rgba(29, 78, 216, 0.22); }
+    .icon-mem { background: var(--mem-soft); color: var(--mem-color); border: 1px solid rgba(109, 40, 217, 0.22); }
+    .icon-disk { background: var(--disk-soft); color: var(--disk-color); border: 1px solid rgba(217, 119, 6, 0.24); }
+    .icon-net { background: var(--net-soft); color: var(--net-color); border: 1px solid rgba(13, 148, 136, 0.22); }
+
+    .metric-body { flex: 1; min-width: 0; }
+
     .metric-label {
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.76rem;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: var(--ink-secondary);
     }
+
+    .metric-cpu .metric-label { color: var(--cpu-color); }
+    .metric-mem .metric-label { color: var(--mem-color); }
+    .metric-disk .metric-label { color: var(--disk-color); }
+    .metric-net .metric-label { color: var(--net-color); }
 
     .metric-number {
       font-family: "IBM Plex Mono", monospace;
-      font-size: 1.6rem;
-      font-weight: 600;
+      font-size: 1.55rem;
+      font-weight: 700;
       color: var(--ink-primary);
-      margin: 0.3rem 0;
+      margin: 0.2rem 0;
     }
 
-    .metric-caption {
-      font-size: 0.82rem;
-      color: var(--ink-secondary);
-    }
+    .metric-caption { font-size: 0.81rem; color: var(--ink-secondary); }
 
     .meter-rail {
       height: 8px;
-      background: rgba(29, 78, 216, 0.11);
+      background: rgba(15, 23, 42, 0.08);
       border-radius: 999px;
       overflow: hidden;
       margin-top: 0.65rem;
     }
 
-    .meter-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-amber));
-      transition: width 0.4s ease;
-    }
+    .meter-fill { height: 100%; width: 0%; transition: width 0.4s ease; }
+    .fill-mem { background: linear-gradient(90deg, var(--mem-color), #a855f7); }
+    .fill-disk { background: linear-gradient(90deg, var(--disk-color), #f59e0b); }
 
-    /* Split Panels */
     .split-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -316,77 +333,14 @@
       border-bottom: 1px solid rgba(30, 58, 138, 0.1);
     }
 
-    table.kv-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.87rem;
-    }
-
-    table.kv-table td {
-      padding: 0.58rem 0.35rem;
-      border-bottom: 1px solid rgba(30, 58, 138, 0.08);
-    }
-
-    table.kv-table td:first-child {
-      color: var(--ink-secondary);
-      width: 42%;
-    }
-
+    table.kv-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+    table.kv-table td { padding: 0.58rem 0.35rem; border-bottom: 1px solid rgba(30, 58, 138, 0.08); }
+    table.kv-table td:first-child { color: var(--ink-secondary); width: 42%; }
     table.kv-table td:last-child {
       font-family: "IBM Plex Mono", monospace;
       font-weight: 600;
       color: var(--ink-primary);
       text-align: right;
-    }
-
-    /* Architecture Feature Cards */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-      gap: 1.35rem;
-    }
-
-    .feature-card {
-      background: var(--glass-card);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 1.4rem;
-      box-shadow: var(--shadow-elevated);
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .feature-badge {
-      align-self: flex-start;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.22rem 0.6rem;
-      border-radius: 6px;
-      background: rgba(29, 78, 216, 0.09);
-      color: var(--accent-blue);
-    }
-
-    .feature-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--ink-primary);
-    }
-
-    .feature-card p {
-      font-size: 0.9rem;
-      color: var(--ink-secondary);
-      flex: 1;
-    }
-
-    .feature-foot {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.78rem;
-      color: var(--accent-indigo);
-      padding-top: 0.6rem;
-      border-top: 1px solid rgba(30, 58, 138, 0.08);
     }
 
     pre.json-stream {
@@ -411,10 +365,7 @@
     }
 
     @media (max-width: 900px) {
-      .hero-surface,
-      .split-grid {
-        grid-template-columns: 1fr;
-      }
+      .hero-surface, .split-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -431,7 +382,6 @@
 
       <nav class="tab-bar" aria-label="Primary Views">
         <button class="tab-btn active" data-panel="telemetry">Live Telemetry</button>
-        <button class="tab-btn" data-panel="architecture">2026 Stack &amp; Lab</button>
         <button class="tab-btn" data-panel="payload">JSON Stream</button>
       </nav>
 
@@ -443,62 +393,94 @@
   </header>
 
   <main>
-    <!-- VIEW 1: LIVE METRICS & RUNTIME TELEMETRY -->
     <section id="panel-telemetry" class="view-panel active">
       <div class="hero-surface">
         <div>
           <span class="hero-kicker" id="heroRuntimeTag">Container &amp; Host Runtime</span>
           <h1 id="heroTitle">Real-Time Container &amp; Host Telemetry</h1>
           <p id="heroSubtitle">
-            Continuous inspection of Linux kernel, CPU topology, cgroup limits, root storage, and HTTP response latency generated inside the container.
+            Live inspection of CPU topology, memory allocation, root disk utilization, and network probe RTT from /telemetry.json.
           </p>
         </div>
 
         <div class="meta-matrix">
-          <div class="meta-tile">
-            <span>Instance / Container ID</span>
-            <strong id="mHost">—</strong>
-          </div>
-          <div class="meta-tile">
-            <span>Execution Platform</span>
-            <strong id="mCloud">—</strong>
-          </div>
-          <div class="meta-tile">
-            <span>Internal IPv4</span>
-            <strong id="mIp">—</strong>
-          </div>
-          <div class="meta-tile">
-            <span>Last Sync (UTC)</span>
-            <strong id="mSync">—</strong>
-          </div>
+          <div class="meta-tile"><span>Instance / Container ID</span><strong id="mHost">—</strong></div>
+          <div class="meta-tile"><span>Execution Platform</span><strong id="mCloud">—</strong></div>
+          <div class="meta-tile"><span>Internal IPv4</span><strong id="mIp">—</strong></div>
+          <div class="meta-tile"><span>Last Sync (UTC)</span><strong id="mSync">—</strong></div>
         </div>
       </div>
 
+      <!-- 4 COLOR-CODED METRIC CARDS WITH LARGE ICONS -->
       <div class="metrics-row">
-        <div class="metric-glass">
-          <div class="metric-label">Compute Cores</div>
-          <div class="metric-number" id="mCores">—</div>
-          <div class="metric-caption" id="mQuota">Quota: —</div>
+        <!-- 1. CPU (Blue) -->
+        <div class="metric-glass metric-cpu">
+          <div class="large-icon-box icon-cpu" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="13" y="13" width="22" height="22" rx="4" />
+              <rect x="19" y="19" width="10" height="10" rx="1.5" />
+              <path d="M18 7v6M24 7v6M30 7v6M18 35v6M24 35v6M30 35v6M7 18h6M7 24h6M7 30h6M35 18h6M35 24h6M35 30h6" />
+            </svg>
+          </div>
+          <div class="metric-body">
+            <div class="metric-label">CPU</div>
+            <div class="metric-number" id="mCores">—</div>
+            <div class="metric-caption" id="mQuota">Quota: —</div>
+          </div>
         </div>
 
-        <div class="metric-glass">
-          <div class="metric-label">Memory Allocation</div>
-          <div class="metric-number" id="mMemVal">—</div>
-          <div class="metric-caption" id="mMemSub">of — MB</div>
-          <div class="meter-rail"><div class="meter-fill" id="mMemBar"></div></div>
+        <!-- 2. Memory (Purple) -->
+        <div class="metric-glass metric-mem">
+          <div class="large-icon-box icon-mem" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="14" width="36" height="18" rx="3" />
+              <rect x="11" y="19" width="7" height="7" rx="1" />
+              <rect x="20.5" y="19" width="7" height="7" rx="1" />
+              <rect x="30" y="19" width="7" height="7" rx="1" />
+              <path d="M12 32v4M18 32v4M24 32v4M30 32v4M36 32v4" />
+            </svg>
+          </div>
+          <div class="metric-body">
+            <div class="metric-label">Memory</div>
+            <div class="metric-number" id="mMemVal">—</div>
+            <div class="metric-caption" id="mMemSub">of — MB</div>
+            <div class="meter-rail"><div class="meter-fill fill-mem" id="mMemBar"></div></div>
+          </div>
         </div>
 
-        <div class="metric-glass">
-          <div class="metric-label">Root Storage</div>
-          <div class="metric-number" id="mDiskVal">—</div>
-          <div class="metric-caption" id="mDiskSub">of — MB</div>
-          <div class="meter-rail"><div class="meter-fill" id="mDiskBar"></div></div>
+        <!-- 3. Disk (Saffron / Amber) -->
+        <div class="metric-glass metric-disk">
+          <div class="large-icon-box icon-disk" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="7" width="30" height="34" rx="5" />
+              <circle cx="24" cy="21" r="8" />
+              <circle cx="24" cy="21" r="2.5" />
+              <path d="M15 35h10M31 35h3" />
+            </svg>
+          </div>
+          <div class="metric-body">
+            <div class="metric-label">Disk</div>
+            <div class="metric-number" id="mDiskVal">—</div>
+            <div class="metric-caption" id="mDiskSub">of — MB</div>
+            <div class="meter-rail"><div class="meter-fill fill-disk" id="mDiskBar"></div></div>
+          </div>
         </div>
 
-        <div class="metric-glass">
-          <div class="metric-label">HTTP Probe RTT</div>
-          <div class="metric-number" id="mRtt">—</div>
-          <div class="metric-caption" id="mLoad">Load: —</div>
+        <!-- 4. Network (Peacock Teal) -->
+        <div class="metric-glass metric-net">
+          <div class="large-icon-box icon-net" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="24" cy="12" r="5" />
+              <circle cx="12" cy="35" r="5" />
+              <circle cx="36" cy="35" r="5" />
+              <path d="M21 16.5L14.5 30.5M27 16.5L33.5 30.5M17 35h14" />
+            </svg>
+          </div>
+          <div class="metric-body">
+            <div class="metric-label">Network</div>
+            <div class="metric-number" id="mRtt">—</div>
+            <div class="metric-caption" id="mLoad">Load: —</div>
+          </div>
         </div>
       </div>
 
@@ -534,67 +516,6 @@
       </div>
     </section>
 
-    <!-- VIEW 2: 2026 ARCHITECTURE & WORKFLOW CARDS -->
-    <section id="panel-architecture" class="view-panel">
-      <div class="hero-surface">
-        <div>
-          <span class="hero-kicker">2026 Container &amp; Cloud Pipeline</span>
-          <h1>Immutable Images, Live Telemetry &amp; VPC Labs</h1>
-          <p>
-            Every push builds a fresh immutable image in GitHub Container Registry, runs entrypoint telemetry collection on startup, and pairs cleanly with short-lived cloud networking experiments.
-          </p>
-        </div>
-        <div class="meta-matrix">
-          <div class="meta-tile">
-            <span>Registry Target</span>
-            <strong>ghcr.io/anilmaz</strong>
-          </div>
-          <div class="meta-tile">
-            <span>Telemetry Interval</span>
-            <strong>5000 ms</strong>
-          </div>
-          <div class="meta-tile">
-            <span>Base Runtime</span>
-            <strong>NGINX Alpine</strong>
-          </div>
-          <div class="meta-tile">
-            <span>Lifecycle Pattern</span>
-            <strong>Pull → Recreate</strong>
-          </div>
-        </div>
-      </div>
-
-      <div class="feature-grid">
-        <article class="feature-card">
-          <span class="feature-badge">ENTRYPOINT TELEMETRY</span>
-          <h3>Automated /telemetry.json Generation</h3>
-          <p>
-            Runs 10-telemetry.sh inside /docker-entrypoint.d/ to sample /proc, cgroup quotas, filesystem capacity, and network identity without needing an external metrics agent.
-          </p>
-          <div class="feature-foot">Endpoint: /telemetry.json (no-store)</div>
-        </article>
-
-        <article class="feature-card">
-          <span class="feature-badge">IMMUTABLE CONTAINERS</span>
-          <h3>Clean Pull &amp; Recreate Workflow</h3>
-          <p>
-            Destroying and recreating the container from a newly pulled tag eliminates configuration drift, ensures entrypoint scripts execute cleanly, and preserves exact SHA traceability.
-          </p>
-          <div class="feature-foot">Tags: :latest &amp; :sha-&lt;commit&gt;</div>
-        </article>
-
-        <article class="feature-card">
-          <span class="feature-badge">CLOUD NETWORKING LAB</span>
-          <h3>VPC, Subnets &amp; Security Group Validation</h3>
-          <p>
-            Deploy the exact same image onto a temporary cloud compute target inside a test VPC to verify subnet routing, security group rules, and private IP assignment before teardown.
-          </p>
-          <div class="feature-foot">Cost-safe ephemeral lab pattern</div>
-        </article>
-      </div>
-    </section>
-
-    <!-- VIEW 3: RAW TELEMETRY PAYLOAD -->
     <section id="panel-payload" class="view-panel">
       <div class="glass-panel">
         <h2>Live /telemetry.json Payload</h2>
@@ -604,7 +525,7 @@
   </main>
 
   <footer>
-    AetherGrid 2026 • Modern Glass Telemetry Console • NGINX Alpine + GHCR
+    AetherGrid 2026 • CPU, Memory, Disk &amp; Network Telemetry Console • NGINX Alpine + GHCR
   </footer>
 
   <script>
