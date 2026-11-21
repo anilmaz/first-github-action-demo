@@ -3,85 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aditi, Diti &amp; Danu + System Telemetry — Bharatiya Glass Console</title>
+  <title>AetherGrid 2026 — Cloud Systems &amp; Live Runtime Telemetry</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      /* Indian Light Palette: Warm Ivory, Saffron, Royal Indigo, Peacock Emerald, Metallic Gold */
-      --bg-ivory: #fbf7ef;
-      --bg-warm: #f3ece0;
-      --glass-surface: rgba(255, 252, 246, 0.68);
-      --glass-strong: rgba(255, 250, 240, 0.84);
-      --glass-border: rgba(180, 115, 25, 0.24);
-      --glass-highlight: rgba(255, 255, 255, 0.72);
+      --bg-base: #f5f7fb;
+      --glass-bg: rgba(255, 255, 255, 0.76);
+      --glass-card: rgba(255, 255, 255, 0.84);
+      --glass-border: rgba(30, 58, 138, 0.13);
+      --glass-shine: rgba(255, 255, 255, 0.78);
 
-      --indigo-deep: #181c46;
-      --royal-blue: #1e3a8a;
-      --royal-purple: #5b21b6;
-      --saffron: #ea580c;
-      --saffron-soft: #f59e0b;
-      --gold: #b45309;
-      --peacock: #0f766e;
-      --emerald: #047857;
+      --ink-primary: #0f172a;
+      --ink-secondary: #475569;
+      --accent-blue: #1d4ed8;
+      --accent-indigo: #4338ca;
+      --accent-purple: #6d28d9;
+      --accent-amber: #d97706;
+      --accent-teal: #0d9488;
+      --accent-emerald: #059669;
 
-      --text-ink: #1e1b18;
-      --text-sub: #57534e;
-      --shadow-glass: 0 14px 36px rgba(24, 28, 70, 0.09), inset 0 1px 0 var(--glass-highlight);
-      --radius-lg: 18px;
-      --radius-md: 12px;
+      --shadow-elevated: 0 16px 40px rgba(15, 23, 42, 0.07), inset 0 1px 0 var(--glass-shine);
+      --radius-xl: 20px;
+      --radius-lg: 15px;
+      --radius-md: 10px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text-ink);
-      min-height: 100vh;
-      line-height: 1.55;
-      background-color: var(--bg-ivory);
+      font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink-primary);
+      background-color: var(--bg-base);
       background-image:
-        radial-gradient(circle at 10% 10%, rgba(234, 88, 12, 0.14), transparent 36%),
-        radial-gradient(circle at 88% 14%, rgba(30, 58, 138, 0.13), transparent 38%),
-        radial-gradient(circle at 78% 82%, rgba(15, 118, 110, 0.12), transparent 40%),
-        radial-gradient(circle at 20% 85%, rgba(180, 83, 9, 0.12), transparent 38%),
-        linear-gradient(165deg, #fdf9f2 0%, #f5efe4 52%, #eef2ff 100%);
+        radial-gradient(circle at 12% 12%, rgba(29, 78, 216, 0.11), transparent 36%),
+        radial-gradient(circle at 88% 16%, rgba(109, 40, 217, 0.10), transparent 38%),
+        radial-gradient(circle at 75% 86%, rgba(217, 119, 6, 0.09), transparent 40%),
+        linear-gradient(180deg, #f8faff 0%, #eef2ff 100%);
+      min-height: 100vh;
+      line-height: 1.6;
     }
 
-    /* Subtle Jali / Mandala Lattice Overlay */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.22;
-      background-image: radial-gradient(rgba(180, 83, 9, 0.35) 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
-
-    header, main, footer {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Glass Header */
+    /* Sticky Glass Header */
     header {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(255, 250, 240, 0.76);
-      backdrop-filter: blur(18px) saturate(145%);
-      -webkit-backdrop-filter: blur(18px) saturate(145%);
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px) saturate(150%);
+      -webkit-backdrop-filter: blur(18px) saturate(150%);
       border-bottom: 1px solid var(--glass-border);
-      box-shadow: 0 6px 24px rgba(24, 28, 70, 0.05);
     }
 
-    .topbar {
+    .nav-shell {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0.85rem 1.5rem;
+      padding: 0.9rem 1.5rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -89,698 +67,692 @@
       gap: 1rem;
     }
 
-    .brand { display: flex; align-items: center; gap: 0.85rem; }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
 
-    .brand-icon {
-      width: 42px;
-      height: 42px;
+    .brand-mark {
+      width: 40px;
+      height: 40px;
       border-radius: 11px;
-      background: linear-gradient(135deg, var(--saffron), var(--gold) 52%, var(--royal-blue));
-      color: #fff;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      color: #ffffff;
       display: grid;
       place-items: center;
-      font-family: "Cinzel", serif;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 20px rgba(29, 78, 216, 0.24);
+    }
+
+    .brand-name {
       font-weight: 800;
-      font-size: 1.15rem;
-      box-shadow: 0 6px 16px rgba(234, 88, 12, 0.28);
-      border: 1px solid rgba(255, 255, 255, 0.55);
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--ink-primary);
     }
 
-    .brand-title {
-      font-family: "Cinzel", serif;
-      font-size: 1.08rem;
-      font-weight: 700;
-      color: var(--indigo-deep);
+    .brand-tagline {
+      font-size: 0.76rem;
+      color: var(--ink-secondary);
     }
 
-    .brand-sub { font-size: 0.78rem; color: var(--text-sub); }
-
-    .mode-tabs {
+    /* Underline Navigation Tabs */
+    .tab-bar {
       display: flex;
-      gap: 0.25rem;
-      border-bottom: 2px solid rgba(180, 83, 9, 0.16);
+      gap: 0.35rem;
+      border-bottom: 2px solid rgba(30, 58, 138, 0.1);
     }
 
-    .mode-tab {
+    .tab-btn {
       background: transparent;
       border: none;
-      border-bottom: 3px solid transparent;
+      border-bottom: 2.5px solid transparent;
       margin-bottom: -2px;
-      padding: 0.55rem 1.05rem;
+      padding: 0.55rem 1rem;
       font-family: inherit;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
-      color: var(--text-sub);
+      color: var(--ink-secondary);
       cursor: pointer;
       transition: color 0.18s ease, border-color 0.18s ease;
     }
 
-    .mode-tab.active, .mode-tab:hover {
-      color: var(--saffron);
-      border-bottom-color: var(--royal-blue);
+    .tab-btn:hover,
+    .tab-btn.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-amber);
     }
 
-    .status-badge {
+    .telemetry-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.38rem 0.78rem;
+      padding: 0.4rem 0.8rem;
       border-radius: 8px;
       font-size: 0.78rem;
       font-weight: 600;
-      background: rgba(4, 120, 87, 0.12);
-      backdrop-filter: blur(10px);
-      color: var(--emerald);
-      border: 1px solid rgba(4, 120, 87, 0.28);
+      background: rgba(5, 150, 105, 0.11);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(5, 150, 105, 0.25);
     }
 
-    .status-badge.warn {
-      background: rgba(217, 119, 6, 0.14);
-      color: var(--gold);
-      border-color: rgba(217, 119, 6, 0.32);
+    .telemetry-pill.degraded {
+      background: rgba(217, 119, 6, 0.13);
+      color: var(--accent-amber);
+      border-color: rgba(217, 119, 6, 0.28);
     }
 
-    .pulse-dot {
+    .status-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: currentColor;
     }
 
+    /* Page Container */
     main {
       max-width: 1280px;
-      margin: 1.75rem auto 3.5rem;
+      margin: 1.8rem auto 3.5rem;
       padding: 0 1.5rem;
     }
 
-    .view-section { display: none; }
-    .view-section.active { display: block; }
+    .view-panel { display: none; }
+    .view-panel.active { display: block; }
 
-    /* Indian Glass Hero Banner */
-    .hero-banner {
-      position: relative;
-      overflow: hidden;
-      background:
-        linear-gradient(130deg, rgba(24, 28, 70, 0.88) 0%, rgba(30, 58, 138, 0.80) 52%, rgba(180, 83, 9, 0.78) 100%);
-      backdrop-filter: blur(20px) saturate(150%);
-      -webkit-backdrop-filter: blur(20px) saturate(150%);
-      color: #fff;
-      border-radius: var(--radius-lg);
-      padding: 1.9rem 2.1rem;
-      box-shadow: 0 18px 42px rgba(24, 28, 70, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-      border: 1px solid rgba(251, 191, 36, 0.42);
+    /* Hero Surface */
+    .hero-surface {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 56%, #4c1d95 100%);
+      color: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 2rem 2.2rem;
+      box-shadow: 0 20px 44px rgba(15, 23, 42, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       display: grid;
       grid-template-columns: 1.35fr 1fr;
-      gap: 1.5rem;
+      gap: 1.6rem;
       align-items: center;
       margin-bottom: 1.5rem;
     }
 
-    /* Saffron-Gold Top Border Strip */
-    .hero-banner::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #f97316, #fbbf24, #10b981, #6366f1);
-    }
-
-    .banner-tag {
+    .hero-kicker {
       display: inline-block;
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
       color: #fde68a;
-      background: rgba(251, 191, 36, 0.16);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(251, 191, 36, 0.4);
-      padding: 0.25rem 0.7rem;
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      padding: 0.25rem 0.68rem;
       border-radius: 6px;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.75rem;
     }
 
-    .hero-banner h1 {
-      font-family: "Cinzel", serif;
-      font-size: clamp(1.45rem, 2.5vw, 2.05rem);
-      margin-bottom: 0.45rem;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    .hero-surface h1 {
+      font-size: clamp(1.55rem, 2.7vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.18;
+      margin-bottom: 0.55rem;
     }
 
-    .hero-banner p { color: #f1f5f9; font-size: 0.94rem; }
-
-    .controls-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.1rem; }
-
-    .input-ctrl, .select-ctrl {
-      padding: 0.62rem 0.9rem;
-      border-radius: 9px;
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      background: rgba(255, 252, 246, 0.9);
-      backdrop-filter: blur(10px);
-      color: var(--indigo-deep);
-      font-family: inherit;
-      font-size: 0.9rem;
+    .hero-surface p {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      max-width: 58ch;
     }
 
-    .input-ctrl { flex: 1 1 220px; }
-
-    .meta-grid-4 {
+    .meta-matrix {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.75rem;
     }
 
-    .meta-box {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(253, 230, 138, 0.28);
-      border-radius: 11px;
-      padding: 0.75rem 0.9rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    .meta-tile {
+      background: rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      padding: 0.8rem 0.95rem;
     }
 
-    .meta-box span {
+    .meta-tile span {
       display: block;
-      font-size: 0.7rem;
+      font-size: 0.69rem;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #fde68a;
+      letter-spacing: 0.07em;
+      color: #93c5fd;
+      margin-bottom: 0.2rem;
     }
 
-    .meta-box strong {
+    .meta-tile strong {
       font-family: "IBM Plex Mono", monospace;
       font-size: 0.88rem;
-      color: #fff;
+      color: #ffffff;
       word-break: break-all;
     }
 
-    /* Glass KPI Cards with Distinct Indian Motif Accents */
-    .kpi-grid {
+    /* Live Metrics Grid */
+    .metrics-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1.2rem;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.5rem;
     }
 
-    .kpi-card {
-      position: relative;
-      overflow: hidden;
-      background: var(--glass-surface);
-      backdrop-filter: blur(16px) saturate(140%);
-      -webkit-backdrop-filter: blur(16px) saturate(140%);
+    .metric-glass {
+      background: var(--glass-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
       padding: 1.25rem 1.35rem;
-      box-shadow: var(--shadow-glass);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: var(--shadow-elevated);
     }
 
-    .kpi-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 40px rgba(24, 28, 70, 0.13), inset 0 1px 0 var(--glass-highlight);
-    }
-
-    .kpi-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-    }
-
-    .kpi-card.accent-saffron::before { background: linear-gradient(90deg, #ea580c, #f59e0b); }
-    .kpi-card.accent-indigo::before { background: linear-gradient(90deg, #1e3a8a, #5b21b6); }
-    .kpi-card.accent-peacock::before { background: linear-gradient(90deg, #0f766e, #047857); }
-    .kpi-card.accent-gold::before { background: linear-gradient(90deg, #b45309, #fbbf24); }
-
-    .kpi-label {
-      font-size: 0.76rem;
+    .metric-label {
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--gold);
+      letter-spacing: 0.06em;
+      color: var(--ink-secondary);
     }
 
-    .kpi-val {
+    .metric-number {
       font-family: "IBM Plex Mono", monospace;
-      font-size: 1.55rem;
-      font-weight: 700;
-      color: var(--indigo-deep);
-      margin: 0.25rem 0;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--ink-primary);
+      margin: 0.3rem 0;
     }
 
-    .kpi-sub { font-size: 0.8rem; color: var(--text-sub); }
+    .metric-caption {
+      font-size: 0.82rem;
+      color: var(--ink-secondary);
+    }
 
-    .bar-track {
+    .meter-rail {
       height: 8px;
-      background: rgba(180, 83, 9, 0.12);
-      border-radius: 5px;
+      background: rgba(29, 78, 216, 0.11);
+      border-radius: 999px;
       overflow: hidden;
       margin-top: 0.65rem;
     }
 
-    .bar-fill {
+    .meter-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--saffron), var(--saffron-soft), var(--royal-blue));
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-amber));
       transition: width 0.4s ease;
     }
 
-    /* Two-Column Glass Spec Panels */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.35rem; }
-
-    .panel {
-      position: relative;
-      overflow: hidden;
-      background: var(--glass-surface);
-      backdrop-filter: blur(16px) saturate(140%);
-      -webkit-backdrop-filter: blur(16px) saturate(140%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 1.4rem;
-      box-shadow: var(--shadow-glass);
-    }
-
-    .panel::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--saffron), var(--gold), var(--peacock));
-    }
-
-    .panel h2 {
-      font-family: "Cinzel", serif;
-      font-size: 1.05rem;
-      color: var(--indigo-deep);
-      margin-bottom: 0.85rem;
-      padding-bottom: 0.55rem;
-      border-bottom: 1px solid rgba(180, 83, 9, 0.16);
-    }
-
-    table.spec-tbl { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
-    table.spec-tbl td { padding: 0.58rem 0.35rem; border-bottom: 1px solid rgba(180, 83, 9, 0.1); }
-    table.spec-tbl td:first-child { color: var(--text-sub); width: 42%; }
-    table.spec-tbl td:last-child {
-      font-family: "IBM Plex Mono", monospace;
-      font-weight: 600;
-      color: var(--indigo-deep);
-      text-align: right;
-    }
-
-    /* Mythology Glass Cards */
-    .cards-grid {
+    /* Split Panels */
+    .split-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 1.35rem;
       margin-bottom: 1.5rem;
     }
 
-    .glass-card {
-      background: var(--glass-surface);
-      backdrop-filter: blur(16px) saturate(140%);
-      -webkit-backdrop-filter: blur(16px) saturate(140%);
+    .glass-panel {
+      background: var(--glass-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-glass);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-elevated);
     }
 
-    .glass-card:hover { transform: translateY(-3px); }
-
-    .card-banner {
-      height: 122px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      padding: 0.75rem;
-      border-bottom: 1px solid rgba(251, 191, 36, 0.35);
+    .glass-panel h2 {
+      font-size: 1.04rem;
+      font-weight: 700;
+      color: var(--ink-primary);
+      padding-bottom: 0.6rem;
+      margin-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(30, 58, 138, 0.1);
     }
 
-    .card-body { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
-    .card-title-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem; }
-    .card-title-row h2 { font-family: "Cinzel", serif; font-size: 1.15rem; color: var(--indigo-deep); }
-    .sanskrit { font-size: 0.88rem; font-weight: 600; color: var(--saffron); }
-    .lineage-sub { font-size: 0.8rem; font-weight: 600; color: var(--royal-purple); margin-bottom: 0.6rem; }
-    .card-text { font-size: 0.9rem; color: var(--text-ink); margin-bottom: 0.9rem; flex: 1; }
-
-    .notable-box {
-      background: rgba(234, 88, 12, 0.07);
-      backdrop-filter: blur(8px);
-      border-left: 3px solid var(--saffron);
-      padding: 0.55rem 0.75rem;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.82rem;
+    table.kv-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87rem;
     }
 
-    /* Frosted Glass JSON Inspector */
-    .json-glass-wrap {
-      margin-top: 1.4rem;
-      background: var(--glass-strong);
+    table.kv-table td {
+      padding: 0.58rem 0.35rem;
+      border-bottom: 1px solid rgba(30, 58, 138, 0.08);
+    }
+
+    table.kv-table td:first-child {
+      color: var(--ink-secondary);
+      width: 42%;
+    }
+
+    table.kv-table td:last-child {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      color: var(--ink-primary);
+      text-align: right;
+    }
+
+    /* Architecture Feature Cards */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.35rem;
+    }
+
+    .feature-card {
+      background: var(--glass-card);
       backdrop-filter: blur(16px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
-      padding: 1.15rem;
-      box-shadow: var(--shadow-glass);
+      padding: 1.4rem;
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
     }
 
-    .json-glass-title {
-      font-family: "Cinzel", serif;
-      font-size: 0.92rem;
+    .feature-badge {
+      align-self: flex-start;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.22rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(29, 78, 216, 0.09);
+      color: var(--accent-blue);
+    }
+
+    .feature-card h3 {
+      font-size: 1.1rem;
       font-weight: 700;
-      color: var(--indigo-deep);
-      margin-bottom: 0.65rem;
+      color: var(--ink-primary);
     }
 
-    pre.json-pre {
-      background: rgba(24, 28, 70, 0.92);
-      color: #fde68a;
-      padding: 1.1rem;
-      border-radius: 12px;
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--ink-secondary);
+      flex: 1;
+    }
+
+    .feature-foot {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      color: var(--accent-indigo);
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(30, 58, 138, 0.08);
+    }
+
+    pre.json-stream {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1.2rem;
+      border-radius: var(--radius-lg);
       font-family: "IBM Plex Mono", monospace;
       font-size: 0.82rem;
       overflow-x: auto;
-      border: 1px solid rgba(251, 191, 36, 0.3);
+      box-shadow: var(--shadow-elevated);
     }
 
     footer {
       text-align: center;
       padding: 1.5rem 1rem;
       font-size: 0.82rem;
-      color: var(--text-sub);
+      color: var(--ink-secondary);
       border-top: 1px solid var(--glass-border);
-      background: rgba(255, 250, 240, 0.75);
+      background: var(--glass-bg);
       backdrop-filter: blur(14px);
     }
 
-    @media (max-width: 880px) {
-      .hero-banner, .two-col { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .hero-surface,
+      .split-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="topbar">
+    <div class="nav-shell">
       <div class="brand">
-        <div class="brand-icon">ॐ</div>
+        <div class="brand-mark">26</div>
         <div>
-          <div class="brand-title">Aditi, Diti &amp; Danu + System Telemetry</div>
-          <div class="brand-sub">Bharatiya Glass Console • Puranic Lineage &amp; Runtime Inspector</div>
+          <div class="brand-name">AetherGrid Runtime</div>
+          <div class="brand-tagline">Container &amp; Host Observability • GHCR Delivery</div>
         </div>
       </div>
 
-      <div class="mode-tabs" role="tablist">
-        <button class="mode-tab active" data-view="telemetry">System &amp; Container HW</button>
-        <button class="mode-tab" data-view="mythology">Devas, Daityas &amp; Danavas</button>
-      </div>
+      <nav class="tab-bar" aria-label="Primary Views">
+        <button class="tab-btn active" data-panel="telemetry">Live Telemetry</button>
+        <button class="tab-btn" data-panel="architecture">2026 Stack &amp; Lab</button>
+        <button class="tab-btn" data-panel="payload">JSON Stream</button>
+      </nav>
 
-      <span id="liveBadge" class="status-badge warn">
-        <span class="pulse-dot"></span>
-        <span id="liveLabel">Initializing...</span>
+      <span id="telemetryBadge" class="telemetry-pill degraded">
+        <span class="status-dot"></span>
+        <span id="telemetryStatusText">Connecting...</span>
       </span>
     </div>
   </header>
 
   <main>
-    <section id="view-telemetry" class="view-section active">
-      <div class="hero-banner">
+    <!-- VIEW 1: LIVE METRICS & RUNTIME TELEMETRY -->
+    <section id="panel-telemetry" class="view-panel active">
+      <div class="hero-surface">
         <div>
-          <span class="banner-tag" id="rtTag">Container / Host Runtime</span>
-          <h1 id="rtHeadline">Inspecting Execution Environment</h1>
-          <p id="rtDesc">Displays live Linux kernel, CPU, cgroup, disk, and network data from /telemetry.json plus client browser specs.</p>
+          <span class="hero-kicker" id="heroRuntimeTag">Container &amp; Host Runtime</span>
+          <h1 id="heroTitle">Real-Time Container &amp; Host Telemetry</h1>
+          <p id="heroSubtitle">
+            Continuous inspection of Linux kernel, CPU topology, cgroup limits, root storage, and HTTP response latency generated inside the container.
+          </p>
         </div>
-        <div class="meta-grid-4">
-          <div class="meta-box"><span>Hostname / Container ID</span><strong id="mHost">Pending</strong></div>
-          <div class="meta-box"><span>Cloud / Environment</span><strong id="mCloud">Pending</strong></div>
-          <div class="meta-box"><span>Container IPv4</span><strong id="mIp">Pending</strong></div>
-          <div class="meta-box"><span>Last Sync (UTC)</span><strong id="mTs">Pending</strong></div>
+
+        <div class="meta-matrix">
+          <div class="meta-tile">
+            <span>Instance / Container ID</span>
+            <strong id="mHost">—</strong>
+          </div>
+          <div class="meta-tile">
+            <span>Execution Platform</span>
+            <strong id="mCloud">—</strong>
+          </div>
+          <div class="meta-tile">
+            <span>Internal IPv4</span>
+            <strong id="mIp">—</strong>
+          </div>
+          <div class="meta-tile">
+            <span>Last Sync (UTC)</span>
+            <strong id="mSync">—</strong>
+          </div>
         </div>
       </div>
 
-      <div class="kpi-grid">
-        <div class="kpi-card accent-saffron">
-          <div class="kpi-label">Compute Topology</div>
-          <div class="kpi-val" id="kCores">0 vCPUs</div>
-          <div class="kpi-sub" id="kQuota">Quota: Checking...</div>
+      <div class="metrics-row">
+        <div class="metric-glass">
+          <div class="metric-label">Compute Cores</div>
+          <div class="metric-number" id="mCores">—</div>
+          <div class="metric-caption" id="mQuota">Quota: —</div>
         </div>
-        <div class="kpi-card accent-indigo">
-          <div class="kpi-label">Memory Usage</div>
-          <div class="kpi-val" id="kMem">0 MB</div>
-          <div class="kpi-sub" id="kMemSub">of 0 MB</div>
-          <div class="bar-track"><div class="bar-fill" id="bMem" style="width:0%"></div></div>
+
+        <div class="metric-glass">
+          <div class="metric-label">Memory Allocation</div>
+          <div class="metric-number" id="mMemVal">—</div>
+          <div class="metric-caption" id="mMemSub">of — MB</div>
+          <div class="meter-rail"><div class="meter-fill" id="mMemBar"></div></div>
         </div>
-        <div class="kpi-card accent-peacock">
-          <div class="kpi-label">Root Volume Disk</div>
-          <div class="kpi-val" id="kDisk">0 MB</div>
-          <div class="kpi-sub" id="kDiskSub">of 0 MB</div>
-          <div class="bar-track"><div class="bar-fill" id="bDisk" style="width:0%"></div></div>
+
+        <div class="metric-glass">
+          <div class="metric-label">Root Storage</div>
+          <div class="metric-number" id="mDiskVal">—</div>
+          <div class="metric-caption" id="mDiskSub">of — MB</div>
+          <div class="meter-rail"><div class="meter-fill" id="mDiskBar"></div></div>
         </div>
-        <div class="kpi-card accent-gold">
-          <div class="kpi-label">HTTP Probe Latency</div>
-          <div class="kpi-val" id="kLat">0 ms</div>
-          <div class="kpi-sub" id="kLoad">Load: 0.00, 0.00, 0.00</div>
+
+        <div class="metric-glass">
+          <div class="metric-label">HTTP Probe RTT</div>
+          <div class="metric-number" id="mRtt">—</div>
+          <div class="metric-caption" id="mLoad">Load: —</div>
         </div>
       </div>
 
-      <div class="two-col">
-        <div class="panel">
-          <h2>Container &amp; Kernel Specs</h2>
-          <table class="spec-tbl">
+      <div class="split-grid">
+        <div class="glass-panel">
+          <h2>Container &amp; Host Kernel Specs</h2>
+          <table class="kv-table">
             <tbody>
-              <tr><td>Runtime Mode</td><td id="sMode">—</td></tr>
-              <tr><td>OS Distribution</td><td id="sOs">—</td></tr>
-              <tr><td>Kernel &amp; Arch</td><td id="sKernel">—</td></tr>
-              <tr><td>CPU Model</td><td id="sCpuModel">—</td></tr>
-              <tr><td>Cgroup Memory Limit</td><td id="sCgMem">—</td></tr>
-              <tr><td>Host Uptime</td><td id="sUptime">—</td></tr>
+              <tr><td>Runtime Mode</td><td id="dMode">—</td></tr>
+              <tr><td>Operating System</td><td id="dOs">—</td></tr>
+              <tr><td>Kernel &amp; Architecture</td><td id="dKernel">—</td></tr>
+              <tr><td>Processor Model</td><td id="dCpuModel">—</td></tr>
+              <tr><td>Cgroup Memory Cap</td><td id="dCgMem">—</td></tr>
+              <tr><td>Uptime</td><td id="dUptime">—</td></tr>
+              <tr><td>HTTP Daemon</td><td id="dNginx">—</td></tr>
             </tbody>
           </table>
         </div>
-        <div class="panel">
-          <h2>Browser Client &amp; Network Context</h2>
-          <table class="spec-tbl">
+
+        <div class="glass-panel">
+          <h2>Browser Client &amp; Session Probe</h2>
+          <table class="kv-table">
             <tbody>
-              <tr><td>Client CPU Threads</td><td id="cCores">—</td></tr>
-              <tr><td>Client Device RAM</td><td id="cMem">—</td></tr>
-              <tr><td>WebGL / GPU</td><td id="cGpu">—</td></tr>
-              <tr><td>Viewport</td><td id="cView">—</td></tr>
-              <tr><td>Access URL</td><td id="cUrl">—</td></tr>
-              <tr><td>Web Server</td><td id="sNginx">—</td></tr>
+              <tr><td>Client Logical Cores</td><td id="cCores">—</td></tr>
+              <tr><td>Client Device Memory</td><td id="cMem">—</td></tr>
+              <tr><td>Graphics Renderer</td><td id="cGpu">—</td></tr>
+              <tr><td>Viewport Dimensions</td><td id="cViewport">—</td></tr>
+              <tr><td>Active Origin</td><td id="cOrigin">—</td></tr>
+              <tr><td>Recent Probe Samples</td><td id="cSamples">—</td></tr>
             </tbody>
           </table>
         </div>
-      </div>
-
-      <div class="json-glass-wrap">
-        <div class="json-glass-title">Live Telemetry JSON Stream (/telemetry.json)</div>
-        <pre class="json-pre" id="jsonDump">Waiting for telemetry...</pre>
       </div>
     </section>
 
-    <section id="view-mythology" class="view-section">
-      <div class="hero-banner">
+    <!-- VIEW 2: 2026 ARCHITECTURE & WORKFLOW CARDS -->
+    <section id="panel-architecture" class="view-panel">
+      <div class="hero-surface">
         <div>
-          <span class="banner-tag">Aditi • Diti • Danu</span>
-          <h1>Devas, Daityas &amp; Danavas</h1>
-          <p>Explore the celestial Devas (Adityas) born of Aditi alongside the Daityas (Diti) and Danavas (Danu) through Sage Kashyapa.</p>
-          <div class="controls-row">
-            <input type="search" id="mythSearch" class="input-ctrl" placeholder="Search Aditi, Diti, Danu, Indra, Prahlada, Maya..." />
-            <select id="mythFilter" class="select-ctrl">
-              <option value="all">All Mothers (Aditi, Diti, Danu)</option>
-              <option value="Aditi">Mother Aditi (Devas)</option>
-              <option value="Diti">Mother Diti (Daityas &amp; Maruts)</option>
-              <option value="Danu">Mother Danu (Danavas)</option>
-            </select>
-          </div>
+          <span class="hero-kicker">2026 Container &amp; Cloud Pipeline</span>
+          <h1>Immutable Images, Live Telemetry &amp; VPC Labs</h1>
+          <p>
+            Every push builds a fresh immutable image in GitHub Container Registry, runs entrypoint telemetry collection on startup, and pairs cleanly with short-lived cloud networking experiments.
+          </p>
         </div>
-        <div class="meta-box" style="padding:1.1rem;">
-          <span>Ancestral Summary</span>
-          <strong style="font-family:inherit;font-size:0.95rem;display:block;margin-top:0.35rem;">
-            Sage Kashyapa + Aditi → Devas (Svarga)<br/>
-            Sage Kashyapa + Diti → Daityas &amp; Maruts<br/>
-            Sage Kashyapa + Danu → Danavas (Rasatala / Patala)
-          </strong>
+        <div class="meta-matrix">
+          <div class="meta-tile">
+            <span>Registry Target</span>
+            <strong>ghcr.io/anilmaz</strong>
+          </div>
+          <div class="meta-tile">
+            <span>Telemetry Interval</span>
+            <strong>5000 ms</strong>
+          </div>
+          <div class="meta-tile">
+            <span>Base Runtime</span>
+            <strong>NGINX Alpine</strong>
+          </div>
+          <div class="meta-tile">
+            <span>Lifecycle Pattern</span>
+            <strong>Pull → Recreate</strong>
+          </div>
         </div>
       </div>
 
-      <div class="cards-grid" id="mythGrid"></div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-badge">ENTRYPOINT TELEMETRY</span>
+          <h3>Automated /telemetry.json Generation</h3>
+          <p>
+            Runs 10-telemetry.sh inside /docker-entrypoint.d/ to sample /proc, cgroup quotas, filesystem capacity, and network identity without needing an external metrics agent.
+          </p>
+          <div class="feature-foot">Endpoint: /telemetry.json (no-store)</div>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-badge">IMMUTABLE CONTAINERS</span>
+          <h3>Clean Pull &amp; Recreate Workflow</h3>
+          <p>
+            Destroying and recreating the container from a newly pulled tag eliminates configuration drift, ensures entrypoint scripts execute cleanly, and preserves exact SHA traceability.
+          </p>
+          <div class="feature-foot">Tags: :latest &amp; :sha-&lt;commit&gt;</div>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-badge">CLOUD NETWORKING LAB</span>
+          <h3>VPC, Subnets &amp; Security Group Validation</h3>
+          <p>
+            Deploy the exact same image onto a temporary cloud compute target inside a test VPC to verify subnet routing, security group rules, and private IP assignment before teardown.
+          </p>
+          <div class="feature-foot">Cost-safe ephemeral lab pattern</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- VIEW 3: RAW TELEMETRY PAYLOAD -->
+    <section id="panel-payload" class="view-panel">
+      <div class="glass-panel">
+        <h2>Live /telemetry.json Payload</h2>
+        <pre class="json-stream" id="rawJsonPre">Loading telemetry...</pre>
+      </div>
     </section>
   </main>
 
   <footer>
-    Bharatiya Glassmorphism UI • Aditi, Diti &amp; Danu + Container/Host Telemetry • GHCR &amp; NGINX Alpine
+    AetherGrid 2026 • Modern Glass Telemetry Console • NGINX Alpine + GHCR
   </footer>
 
   <script>
-    function setText(id, val) {
+    const samples = [];
+
+    function setVal(id, text) {
       const el = document.getElementById(id);
-      if (el) el.textContent = String(val);
+      if (el) el.textContent = String(text);
     }
 
-    document.querySelectorAll(".mode-tab").forEach((btn) => {
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
-        document.querySelectorAll(".mode-tab").forEach((b) => b.classList.remove("active"));
-        document.querySelectorAll(".view-section").forEach((s) => s.classList.remove("active"));
+        document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll(".view-panel").forEach((p) => p.classList.remove("active"));
         btn.classList.add("active");
-        const target = document.getElementById("view-" + btn.dataset.view);
-        if (target) target.classList.add("active");
+        const panel = document.getElementById("panel-" + btn.dataset.panel);
+        if (panel) panel.classList.add("active");
       });
     });
 
-    const MYTH_ITEMS = [
-      { name: "Devas & Adityas", sk: "आदित्य / देव", mother: "Aditi", line: "Aditi & Sage Kashyapa", bg: "linear-gradient(135deg,#ea580c,#d97706,#1e3a8a)", sigil: "☀", desc: "Celestial guardians of cosmic order (rita) and light born of boundless Aditi.", notable: "Indra, Surya, Varuna, Mitra, Vamana" },
-      { name: "Daityas", sk: "दैत्य", mother: "Diti", line: "Diti & Sage Kashyapa", bg: "linear-gradient(135deg,#5b21b6,#b45309)", sigil: "✦", desc: "Mighty rulers and ascetics born of Diti, famed for intense tapasya and devotion.", notable: "Hiranyakashipu, Hiranyaksha, Prahlada, Mahabali" },
-      { name: "Danavas", sk: "दानव", mother: "Danu", line: "Danu & Sage Kashyapa", bg: "linear-gradient(135deg,#181c46,#0f766e)", sigil: "◈", desc: "Descendants of Danu known for mastery of illusion (maya) and grand architecture.", notable: "Maya Danava, Viprachitti, Vritra, Shambara" },
-      { name: "Maruts", sk: "मरुत", mother: "Diti", line: "Diti's Embryo Transformed", bg: "linear-gradient(135deg,#0f766e,#1e3a8a)", sigil: "❖", desc: "Forty-nine storm and wind deities arising from Diti's purified lineage.", notable: "Tempest & Wind Deities allied with Indra" },
-      { name: "Danava Councils", sk: "दानव गण", mother: "Danu", line: "Danu & Sage Kashyapa", bg: "linear-gradient(135deg,#92400e,#4c1d95)", sigil: "✵", desc: "Strategic leaders and coalitions of Danavas across epic and Puranic narratives.", notable: "Viprachitti, Namuchi, Puloman" },
-      { name: "Aditi Cosmic Mother", sk: "अदिति", mother: "Aditi", line: "Primeval Mother of Devas", bg: "linear-gradient(135deg,#d97706,#ea580c,#047857)", sigil: "ॐ", desc: "Revered in the Vedas and Puranas as vast cosmic space and maternal nurture.", notable: "Mother of the Adityas & Vamana" }
-    ];
-
-    function renderMyth() {
-      const q = (document.getElementById("mythSearch")?.value || "").trim().toLowerCase();
-      const m = document.getElementById("mythFilter")?.value || "all";
-      const list = MYTH_ITEMS.filter((x) => {
-        const okM = m === "all" || x.mother === m;
-        const okQ = !q || (x.name + " " + x.sk + " " + x.mother + " " + x.line + " " + x.desc + " " + x.notable).toLowerCase().includes(q);
-        return okM && okQ;
-      });
-      const grid = document.getElementById("mythGrid");
-      if (!grid) return;
-      grid.innerHTML = list.map((x) => `
-        <article class="glass-card">
-          <div class="card-banner" style="background:${x.bg}">
-            <div style="font-size:2rem;line-height:1">${x.sigil}</div>
-            <div style="font-family:Georgia,serif;font-size:1.25rem;font-weight:bold;margin-top:0.25rem">${x.sk}</div>
-          </div>
-          <div class="card-body">
-            <div class="card-title-row"><h2>${x.name}</h2><span class="sanskrit">${x.sk}</span></div>
-            <div class="lineage-sub">${x.line}</div>
-            <p class="card-text">${x.desc}</p>
-            <div class="notable-box"><strong>Notable:</strong> ${x.notable}</div>
-          </div>
-        </article>
-      `).join("");
+    function formatDuration(sec) {
+      const total = Number(sec) || 0;
+      const days = Math.floor(total / 86400);
+      const hours = Math.floor((total % 86400) / 3600);
+      const mins = Math.floor((total % 3600) / 60);
+      if (days > 0) return `${days}d ${hours}h ${mins}m`;
+      if (hours > 0) return `${hours}h ${mins}m ${total % 60}s`;
+      return `${mins}m ${total % 60}s`;
     }
 
-    function populateClientSpecs() {
-      setText("cCores", navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " cores" : "Not reported");
-      setText("cMem", navigator.deviceMemory ? "~" + navigator.deviceMemory + " GB" : "Not reported");
-      setText("cView", window.innerWidth + "x" + window.innerHeight);
-      setText("cUrl", window.location.href);
+    function probeClient() {
+      setVal("cCores", navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} threads` : "Not exposed");
+      setVal("cMem", navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : "Not exposed");
+      setVal("cViewport", `${window.innerWidth} × ${window.innerHeight}`);
+      setVal("cOrigin", window.location.origin);
+
       try {
         const canvas = document.createElement("canvas");
         const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
         if (!gl) {
-          setText("cGpu", "Unavailable");
+          setVal("cGpu", "Unavailable");
           return;
         }
         const ext = gl.getExtension("WEBGL_debug_renderer_info");
-        const gpu = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
-        setText("cGpu", gpu || "WebGL Active");
-      } catch (e) {
-        setText("cGpu", "Restricted");
+        const renderer = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+        setVal("cGpu", renderer || "WebGL Active");
+      } catch {
+        setVal("cGpu", "Restricted");
       }
     }
 
-    function fmtUp(s) {
-      s = Number(s) || 0;
-      const h = Math.floor(s / 3600);
-      const m = Math.floor((s % 3600) / 60);
-      return h + "h " + m + "m (" + s + "s)";
-    }
+    function renderMetrics(data, rttMs, live) {
+      const badge = document.getElementById("telemetryBadge");
+      if (badge) badge.classList.toggle("degraded", !live);
+      setVal("telemetryStatusText", live ? "Live Telemetry" : "Fallback Snapshot");
 
-    function applyData(d, ms, isLive) {
-      const badge = document.getElementById("liveBadge");
-      if (badge) badge.classList.toggle("warn", !isLive);
-      setText("liveLabel", isLive ? "Live Telemetry" : "Fallback Mode");
-      setText("rtTag", d.runtimeMode || "Container Runtime");
-      setText("rtHeadline", (d.osPrettyName || "Linux") + " (" + (d.architecture || "x86_64") + ")");
-      setText("mHost", d.hostname || "localhost");
-      setText("mCloud", d.cloudEnvironment || "Local");
-      setText("mIp", d.containerIp || "127.0.0.1");
-      setText("mTs", d.timestampUtc || new Date().toISOString());
+      setVal("heroRuntimeTag", data.runtimeMode || "Runtime");
+      setVal("heroTitle", `${data.osPrettyName || "Linux"} · ${data.architecture || "x86_64"}`);
+      setVal("mHost", data.hostname || "localhost");
+      setVal("mCloud", data.cloudEnvironment || "Local");
+      setVal("mIp", data.containerIp || "127.0.0.1");
+      setVal("mSync", data.timestampUtc || new Date().toISOString());
 
-      const cpu = d.cpu || {};
-      const mem = d.memory || {};
-      const stg = d.storage || {};
+      const cpu = data.cpu || {};
+      const mem = data.memory || {};
+      const stg = data.storage || {};
 
-      setText("kCores", (cpu.cores || 1) + " vCPUs");
-      setText("kQuota", "Quota: " + (cpu.cgroupQuota || "Host"));
+      setVal("mCores", `${cpu.cores || 1} vCPU`);
+      setVal("mQuota", `Quota: ${cpu.cgroupQuota || "Host"}`);
 
       const totalMem = Number(mem.totalMb) || 0;
       const usedMem = Number(mem.usedMb) || 0;
-      const mp = totalMem > 0 ? Math.min(100, Math.round((usedMem / totalMem) * 100)) : 0;
-      setText("kMem", usedMem + " MB");
-      setText("kMemSub", "of " + totalMem + " MB (" + mp + "%)");
-      const bMem = document.getElementById("bMem");
-      if (bMem) bMem.style.width = mp + "%";
+      const memPct = totalMem > 0 ? Math.min(100, Math.round((usedMem / totalMem) * 100)) : 0;
+      setVal("mMemVal", `${usedMem.toLocaleString()} MB`);
+      setVal("mMemSub", `of ${totalMem.toLocaleString()} MB (${memPct}%)`);
+      const memBar = document.getElementById("mMemBar");
+      if (memBar) memBar.style.width = `${memPct}%`;
 
       const totalDisk = Number(stg.totalMb) || 0;
       const usedDisk = Number(stg.usedMb) || 0;
-      const dp = Number(stg.usedPercent) || (totalDisk > 0 ? Math.min(100, Math.round((usedDisk / totalDisk) * 100)) : 0);
-      setText("kDisk", usedDisk + " MB");
-      setText("kDiskSub", "of " + totalDisk + " MB (" + dp + "%)");
-      const bDisk = document.getElementById("bDisk");
-      if (bDisk) bDisk.style.width = dp + "%";
+      const diskPct = Number(stg.usedPercent) || (totalDisk > 0 ? Math.min(100, Math.round((usedDisk / totalDisk) * 100)) : 0);
+      setVal("mDiskVal", `${usedDisk.toLocaleString()} MB`);
+      setVal("mDiskSub", `of ${totalDisk.toLocaleString()} MB (${diskPct}%)`);
+      const diskBar = document.getElementById("mDiskBar");
+      if (diskBar) diskBar.style.width = `${diskPct}%`;
 
-      setText("kLat", ms + " ms");
-      setText("kLoad", "Load: " + (cpu.loadAverage || "0.00, 0.00, 0.00"));
+      samples.push(rttMs);
+      if (samples.length > 8) samples.shift();
 
-      setText("sMode", d.runtimeMode || "—");
-      setText("sOs", d.osPrettyName || "—");
-      setText("sKernel", (d.kernel || "—") + " / " + (d.architecture || "—"));
-      setText("sCpuModel", cpu.model || "—");
-      setText("sCgMem", mem.cgroupLimit || "—");
-      setText("sUptime", fmtUp(d.uptimeSeconds));
-      setText("sNginx", d.webServer || "nginx");
-      setText("jsonDump", JSON.stringify(d, null, 2));
+      setVal("mRtt", `${rttMs} ms`);
+      setVal("mLoad", `Load: ${cpu.loadAverage || "0.00, 0.00, 0.00"}`);
+      setVal("cSamples", samples.map((n) => `${n}ms`).join(" · "));
+
+      setVal("dMode", data.runtimeMode || "—");
+      setVal("dOs", data.osPrettyName || "—");
+      setVal("dKernel", `${data.kernel || "—"} (${data.architecture || "—"})`);
+      setVal("dCpuModel", cpu.model || "—");
+      setVal("dCgMem", mem.cgroupLimit || "—");
+      setVal("dUptime", formatDuration(data.uptimeSeconds));
+      setVal("dNginx", data.webServer || "nginx");
+
+      setVal("rawJsonPre", JSON.stringify(data, null, 2));
     }
 
-    async function pollTelemetry() {
-      const t0 = performance.now();
+    async function refreshTelemetry() {
+      const start = performance.now();
       try {
-        const r = await fetch("/telemetry.json?t=" + Date.now(), { cache: "no-store" });
-        const ms = Math.max(1, Math.round(performance.now() - t0));
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        const d = await r.json();
-        applyData(d, ms, true);
-      } catch (err) {
-        const ms = Math.max(1, Math.round(performance.now() - t0));
-        applyData({
+        const res = await fetch(`/telemetry.json?t=${Date.now()}`, { cache: "no-store" });
+        const rtt = Math.max(1, Math.round(performance.now() - start));
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const payload = await res.json();
+        renderMetrics(payload, rtt, true);
+      } catch {
+        const rtt = Math.max(1, Math.round(performance.now() - start));
+        renderMetrics({
           timestampUtc: new Date().toISOString(),
-          runtimeMode: "Fallback (telemetry.json not yet served)",
-          cloudEnvironment: "Browser / Local",
+          runtimeMode: "Fallback Snapshot (awaiting /telemetry.json)",
+          cloudEnvironment: "Local Browser",
           hostname: window.location.hostname || "localhost",
           containerIp: "127.0.0.1",
-          osPrettyName: navigator.platform || "Client",
-          architecture: "x86_64",
+          osPrettyName: navigator.platform || "Host Runtime",
+          architecture: navigator.userAgentData?.platform || "x86_64",
           kernel: "N/A",
-          webServer: "nginx",
-          cpu: { model: "N/A", cores: navigator.hardwareConcurrency || 2, cgroupQuota: "N/A", loadAverage: "0.00, 0.00, 0.00" },
-          memory: { totalMb: (navigator.deviceMemory || 4) * 1024, usedMb: 512, cgroupLimit: "N/A" },
-          storage: { totalMb: 10000, usedMb: 1200, usedPercent: 12 },
+          webServer: "nginx/1.27-alpine",
+          cpu: {
+            model: "Client fallback",
+            cores: navigator.hardwareConcurrency || 4,
+            cgroupQuota: "N/A",
+            loadAverage: "0.00, 0.00, 0.00"
+          },
+          memory: {
+            totalMb: (navigator.deviceMemory || 8) * 1024,
+            usedMb: 1024,
+            cgroupLimit: "N/A"
+          },
+          storage: {
+            totalMb: 102400,
+            usedMb: 24576,
+            usedPercent: 24
+          },
           uptimeSeconds: Math.floor(performance.now() / 1000)
-        }, ms, false);
+        }, rtt, false);
       }
     }
 
-    document.getElementById("mythSearch")?.addEventListener("input", renderMyth);
-    document.getElementById("mythFilter")?.addEventListener("change", renderMyth);
-
-    renderMyth();
-    populateClientSpecs();
-    pollTelemetry();
-    setInterval(pollTelemetry, 5000);
+    probeClient();
+    refreshTelemetry();
+    setInterval(refreshTelemetry, 5000);
   </script>
 </body>
 </html>
