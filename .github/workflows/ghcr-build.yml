@@ -1,4 +1,4 @@
-name: Build and Push to GHCR
+name: Build, Verify & Push to GHCR
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push:
+  build-test-push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -36,14 +36,28 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            type=sha
             type=raw,value=latest,enable={{is_default_branch}}
-            type=sha,prefix=sha-
 
-      - name: Build and push container image
+      - name: Build local image for smoke testing
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
+          load: true
+          tags: smoke-test:ci
+
+      - name: Run HTTP smoke test against container
+        run: |
+          docker run -d --name ci-smoke -p 8080:80 smoke-test:ci
+          sleep 3
+          curl -f http://localhost:8080/
+          curl -f http://localhost:8080/telemetry.json
+          docker rm -f ci-smoke
+
+      - name: Build and push verified image to GHCR
+        uses: docker/build-push-action@v6
+        with:
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
