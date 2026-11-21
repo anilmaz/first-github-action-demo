@@ -3,34 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AetherGrid 2026 — Cloud Systems &amp; Live Runtime Telemetry</title>
+  <title>AetherGrid 2026 — Bharat Glass Runtime &amp; Telemetry Console</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-base: #f5f7fb;
-      --glass-bg: rgba(255, 255, 255, 0.78);
-      --glass-card: rgba(255, 255, 255, 0.86);
-      --glass-border: rgba(30, 58, 138, 0.13);
-      --glass-shine: rgba(255, 255, 255, 0.8);
+      /* Bharat Flag Palette + Glassmorphism Tokens */
+      --flag-saffron: #ff9933;
+      --flag-saffron-deep: #d96b00;
+      --flag-white: #ffffff;
+      --flag-green: #138808;
+      --flag-green-deep: #0b5e04;
+      --ashoka-navy: #000080;
+      --ashoka-royal: #1a237e;
 
-      --ink-primary: #0f172a;
-      --ink-secondary: #475569;
+      --glass-tint: rgba(255, 255, 255, 0.68);
+      --glass-card: rgba(255, 255, 255, 0.76);
+      --glass-border: rgba(0, 0, 128, 0.16);
+      --glass-inner-shine: rgba(255, 255, 255, 0.85);
 
-      /* Distinct Metric Accents */
-      --cpu-color: #1d4ed8;
-      --cpu-soft: rgba(29, 78, 216, 0.12);
-      --mem-color: #6d28d9;
-      --mem-soft: rgba(109, 40, 217, 0.12);
-      --disk-color: #d97706;
-      --disk-soft: rgba(217, 119, 6, 0.13);
-      --net-color: #0d9488;
-      --net-soft: rgba(13, 148, 136, 0.12);
+      --ink-primary: #0b1338;
+      --ink-secondary: #334155;
 
-      --accent-emerald: #059669;
-      --shadow-elevated: 0 16px 40px rgba(15, 23, 42, 0.07), inset 0 1px 0 var(--glass-shine);
-      --radius-xl: 20px;
+      /* Distinct Metric Accents Harmonized with Bharat Palette */
+      --cpu-color: #000080;       /* Ashoka Navy */
+      --cpu-soft: rgba(0, 0, 128, 0.11);
+      --mem-color: #138808;       /* India Green */
+      --mem-soft: rgba(19, 136, 8, 0.12);
+      --disk-color: #e67e00;      /* Rich Kesari Saffron */
+      --disk-soft: rgba(255, 153, 51, 0.18);
+      --net-color: #0f6b5b;       /* Deep Tiranga Teal-Green */
+      --net-soft: rgba(15, 107, 91, 0.12);
+
+      --shadow-glass: 0 16px 38px rgba(0, 0, 128, 0.08), inset 0 1px 0 var(--glass-inner-shine);
+      --radius-xl: 22px;
       --radius-lg: 16px;
     }
 
@@ -39,30 +46,40 @@
     body {
       font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--ink-primary);
-      background-color: var(--bg-base);
-      background-image:
-        radial-gradient(circle at 12% 12%, rgba(29, 78, 216, 0.11), transparent 36%),
-        radial-gradient(circle at 88% 16%, rgba(109, 40, 217, 0.10), transparent 38%),
-        radial-gradient(circle at 75% 86%, rgba(217, 119, 6, 0.09), transparent 40%),
-        linear-gradient(180deg, #f8faff 0%, #eef2ff 100%);
       min-height: 100vh;
       line-height: 1.6;
+      background-color: #f7f8fc;
+      background-image:
+        radial-gradient(circle at 10% 8%, rgba(255, 153, 51, 0.22), transparent 38%),
+        radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.85), transparent 52%),
+        radial-gradient(circle at 90% 16%, rgba(19, 136, 8, 0.18), transparent 40%),
+        radial-gradient(circle at 82% 88%, rgba(0, 0, 128, 0.12), transparent 42%),
+        linear-gradient(180deg, rgba(255, 153, 51, 0.08) 0%, rgba(255, 255, 255, 0.92) 48%, rgba(19, 136, 8, 0.10) 100%);
     }
 
+    /* Glass Header with Tiranga Accent */
     header {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: var(--glass-bg);
-      backdrop-filter: blur(18px) saturate(150%);
-      -webkit-backdrop-filter: blur(18px) saturate(150%);
+      background: var(--glass-tint);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
       border-bottom: 1px solid var(--glass-border);
+      box-shadow: 0 8px 28px rgba(0, 0, 128, 0.06), inset 0 1px 0 var(--glass-inner-shine);
+    }
+
+    header::after {
+      content: "";
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--flag-saffron) 0% 33.33%, var(--flag-white) 33.33% 66.66%, var(--flag-green) 66.66% 100%);
     }
 
     .nav-shell {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0.9rem 1.5rem;
+      padding: 0.85rem 1.5rem;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -73,26 +90,33 @@
     .brand { display: flex; align-items: center; gap: 0.85rem; }
 
     .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 11px;
-      background: linear-gradient(135deg, var(--cpu-color), var(--mem-color));
-      color: #ffffff;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, var(--flag-saffron) 0% 34%, #ffffff 34% 66%, var(--flag-green) 66% 100%);
+      color: var(--ashoka-navy);
+      border: 1.5px solid rgba(0, 0, 128, 0.28);
       display: grid;
       place-items: center;
       font-family: "IBM Plex Mono", monospace;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.95rem;
-      box-shadow: 0 8px 20px rgba(29, 78, 216, 0.24);
+      box-shadow: 0 8px 20px rgba(0, 0, 128, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
 
-    .brand-name { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--ink-primary); }
+    .brand-name {
+      font-weight: 800;
+      font-size: 1.06rem;
+      letter-spacing: -0.02em;
+      color: var(--ashoka-navy);
+    }
+
     .brand-tagline { font-size: 0.76rem; color: var(--ink-secondary); }
 
     .tab-bar {
       display: flex;
       gap: 0.35rem;
-      border-bottom: 2px solid rgba(30, 58, 138, 0.1);
+      border-bottom: 2px solid rgba(0, 0, 128, 0.12);
     }
 
     .tab-btn {
@@ -111,27 +135,29 @@
 
     .tab-btn:hover,
     .tab-btn.active {
-      color: var(--cpu-color);
-      border-bottom-color: var(--disk-color);
+      color: var(--ashoka-navy);
+      border-bottom-color: var(--flag-saffron-deep);
     }
 
     .telemetry-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
+      padding: 0.4rem 0.82rem;
+      border-radius: 9px;
       font-size: 0.78rem;
-      font-weight: 600;
-      background: rgba(5, 150, 105, 0.11);
-      color: var(--accent-emerald);
-      border: 1px solid rgba(5, 150, 105, 0.25);
+      font-weight: 700;
+      background: rgba(19, 136, 8, 0.12);
+      backdrop-filter: blur(12px);
+      color: var(--flag-green-deep);
+      border: 1px solid rgba(19, 136, 8, 0.3);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
     }
 
     .telemetry-pill.degraded {
-      background: var(--disk-soft);
-      color: var(--disk-color);
-      border-color: rgba(217, 119, 6, 0.3);
+      background: rgba(255, 153, 51, 0.18);
+      color: var(--flag-saffron-deep);
+      border-color: rgba(217, 107, 0, 0.34);
     }
 
     .status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
@@ -140,13 +166,22 @@
     .view-panel { display: none; }
     .view-panel.active { display: block; }
 
+    /* Tiranga Glass Hero Surface */
     .hero-surface {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 56%, #4c1d95 100%);
-      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(125deg,
+          rgba(255, 153, 51, 0.24) 0%,
+          rgba(255, 255, 255, 0.78) 46%,
+          rgba(19, 136, 8, 0.20) 100%);
+      backdrop-filter: blur(22px) saturate(165%);
+      -webkit-backdrop-filter: blur(22px) saturate(165%);
+      color: var(--ink-primary);
       border-radius: var(--radius-xl);
       padding: 2rem 2.2rem;
-      box-shadow: 0 20px 44px rgba(15, 23, 42, 0.16);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 20px 46px rgba(0, 0, 128, 0.11), inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 128, 0.18);
       display: grid;
       grid-template-columns: 1.35fr 1fr;
       gap: 1.6rem;
@@ -154,16 +189,28 @@
       margin-bottom: 1.5rem;
     }
 
+    .hero-surface::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--flag-saffron) 0% 33.33%, var(--flag-white) 33.33% 66.66%, var(--flag-green) 66.66% 100%);
+    }
+
     .hero-kicker {
       display: inline-block;
-      font-size: 0.73rem;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #fde68a;
-      background: rgba(251, 191, 36, 0.15);
-      border: 1px solid rgba(251, 191, 36, 0.35);
-      padding: 0.25rem 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--ashoka-navy);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 0, 128, 0.22);
+      padding: 0.25rem 0.7rem;
       border-radius: 6px;
       margin-bottom: 0.75rem;
     }
@@ -173,38 +220,50 @@
       font-weight: 800;
       letter-spacing: -0.025em;
       line-height: 1.18;
+      color: var(--ashoka-navy);
       margin-bottom: 0.55rem;
     }
 
-    .hero-surface p { color: #cbd5e1; font-size: 0.95rem; max-width: 58ch; }
+    .hero-surface p {
+      color: var(--ink-secondary);
+      font-size: 0.95rem;
+      max-width: 58ch;
+    }
 
     .meta-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
     .meta-tile {
-      background: rgba(255, 255, 255, 0.09);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 0, 128, 0.16);
+      border-radius: 13px;
       padding: 0.8rem 0.95rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 128, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.85);
     }
 
     .meta-tile span {
       display: block;
-      font-size: 0.69rem;
+      font-size: 0.68rem;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: #93c5fd;
+      color: var(--flag-saffron-deep);
       margin-bottom: 0.2rem;
+    }
+
+    .meta-tile:nth-child(even) span {
+      color: var(--flag-green-deep);
     }
 
     .meta-tile strong {
       font-family: "IBM Plex Mono", monospace;
       font-size: 0.88rem;
-      color: #ffffff;
+      color: var(--ashoka-navy);
       word-break: break-all;
     }
 
-    /* 4 Distinctly Colored Metric Cards with Large Icons */
+    /* 4 Glassmorphism Metric Cards with Distinct Colors & Large Icons */
     .metrics-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
@@ -216,19 +275,22 @@
       position: relative;
       overflow: hidden;
       background: var(--glass-card);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px) saturate(155%);
+      -webkit-backdrop-filter: blur(20px) saturate(155%);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
       padding: 1.3rem 1.35rem;
-      box-shadow: var(--shadow-elevated);
+      box-shadow: var(--shadow-glass);
       display: flex;
       gap: 1rem;
       align-items: flex-start;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .metric-glass:hover { transform: translateY(-3px); }
+    .metric-glass:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 44px rgba(0, 0, 128, 0.12), inset 0 1px 0 var(--glass-inner-shine);
+    }
 
     .metric-glass::before {
       content: "";
@@ -239,16 +301,28 @@
       height: 4px;
     }
 
-    .metric-cpu { border-color: rgba(29, 78, 216, 0.24); }
+    .metric-cpu {
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.82), rgba(0, 0, 128, 0.08));
+      border-color: rgba(0, 0, 128, 0.24);
+    }
     .metric-cpu::before { background: var(--cpu-color); }
 
-    .metric-mem { border-color: rgba(109, 40, 217, 0.24); }
+    .metric-mem {
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.82), rgba(19, 136, 8, 0.09));
+      border-color: rgba(19, 136, 8, 0.26);
+    }
     .metric-mem::before { background: var(--mem-color); }
 
-    .metric-disk { border-color: rgba(217, 119, 6, 0.26); }
+    .metric-disk {
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.82), rgba(255, 153, 51, 0.14));
+      border-color: rgba(230, 126, 0, 0.28);
+    }
     .metric-disk::before { background: var(--disk-color); }
 
-    .metric-net { border-color: rgba(13, 148, 136, 0.24); }
+    .metric-net {
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.82), rgba(15, 107, 91, 0.10));
+      border-color: rgba(15, 107, 91, 0.25);
+    }
     .metric-net::before { background: var(--net-color); }
 
     .large-icon-box {
@@ -259,17 +333,16 @@
       display: grid;
       place-items: center;
       margin-top: 0.15rem;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
     }
 
-    .large-icon-box svg {
-      width: 44px;
-      height: 44px;
-    }
+    .large-icon-box svg { width: 44px; height: 44px; }
 
-    .icon-cpu { background: var(--cpu-soft); color: var(--cpu-color); border: 1px solid rgba(29, 78, 216, 0.22); }
-    .icon-mem { background: var(--mem-soft); color: var(--mem-color); border: 1px solid rgba(109, 40, 217, 0.22); }
-    .icon-disk { background: var(--disk-soft); color: var(--disk-color); border: 1px solid rgba(217, 119, 6, 0.24); }
-    .icon-net { background: var(--net-soft); color: var(--net-color); border: 1px solid rgba(13, 148, 136, 0.22); }
+    .icon-cpu { background: var(--cpu-soft); color: var(--cpu-color); border: 1px solid rgba(0, 0, 128, 0.24); }
+    .icon-mem { background: var(--mem-soft); color: var(--mem-color); border: 1px solid rgba(19, 136, 8, 0.24); }
+    .icon-disk { background: var(--disk-soft); color: var(--disk-color); border: 1px solid rgba(230, 126, 0, 0.28); }
+    .icon-net { background: var(--net-soft); color: var(--net-color); border: 1px solid rgba(15, 107, 91, 0.24); }
 
     .metric-body { flex: 1; min-width: 0; }
 
@@ -297,16 +370,17 @@
 
     .meter-rail {
       height: 8px;
-      background: rgba(15, 23, 42, 0.08);
+      background: rgba(0, 0, 128, 0.09);
       border-radius: 999px;
       overflow: hidden;
       margin-top: 0.65rem;
     }
 
     .meter-fill { height: 100%; width: 0%; transition: width 0.4s ease; }
-    .fill-mem { background: linear-gradient(90deg, var(--mem-color), #a855f7); }
-    .fill-disk { background: linear-gradient(90deg, var(--disk-color), #f59e0b); }
+    .fill-mem { background: linear-gradient(90deg, var(--mem-color), #22c55e); }
+    .fill-disk { background: linear-gradient(90deg, var(--disk-color), var(--flag-saffron)); }
 
+    /* Glass Spec Panels */
     .split-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -315,26 +389,38 @@
     }
 
     .glass-panel {
+      position: relative;
+      overflow: hidden;
       background: var(--glass-card);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px) saturate(155%);
+      -webkit-backdrop-filter: blur(20px) saturate(155%);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
       padding: 1.4rem;
-      box-shadow: var(--shadow-elevated);
+      box-shadow: var(--shadow-glass);
+    }
+
+    .glass-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--flag-saffron) 0% 33.33%, var(--ashoka-navy) 33.33% 66.66%, var(--flag-green) 66.66% 100%);
     }
 
     .glass-panel h2 {
       font-size: 1.04rem;
       font-weight: 700;
-      color: var(--ink-primary);
+      color: var(--ashoka-navy);
       padding-bottom: 0.6rem;
       margin-bottom: 0.85rem;
-      border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 128, 0.11);
     }
 
     table.kv-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
-    table.kv-table td { padding: 0.58rem 0.35rem; border-bottom: 1px solid rgba(30, 58, 138, 0.08); }
+    table.kv-table td { padding: 0.58rem 0.35rem; border-bottom: 1px solid rgba(0, 0, 128, 0.08); }
     table.kv-table td:first-child { color: var(--ink-secondary); width: 42%; }
     table.kv-table td:last-child {
       font-family: "IBM Plex Mono", monospace;
@@ -343,15 +429,26 @@
       text-align: right;
     }
 
-    pre.json-stream {
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 1.2rem;
+    /* Glass JSON Stream Container */
+    .json-glass-card {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
       border-radius: var(--radius-lg);
+      padding: 1.2rem;
+      box-shadow: var(--shadow-glass);
+    }
+
+    pre.json-stream {
+      background: rgba(11, 19, 56, 0.92);
+      color: #f8fafc;
+      padding: 1.2rem;
+      border-radius: 12px;
       font-family: "IBM Plex Mono", monospace;
       font-size: 0.82rem;
       overflow-x: auto;
-      box-shadow: var(--shadow-elevated);
+      border: 1px solid rgba(255, 153, 51, 0.35);
     }
 
     footer {
@@ -360,8 +457,8 @@
       font-size: 0.82rem;
       color: var(--ink-secondary);
       border-top: 1px solid var(--glass-border);
-      background: var(--glass-bg);
-      backdrop-filter: blur(14px);
+      background: var(--glass-tint);
+      backdrop-filter: blur(18px);
     }
 
     @media (max-width: 900px) {
@@ -376,7 +473,7 @@
         <div class="brand-mark">26</div>
         <div>
           <div class="brand-name">AetherGrid Runtime</div>
-          <div class="brand-tagline">Container &amp; Host Observability • GHCR Delivery</div>
+          <div class="brand-tagline">Bharat Glass Observability • Container &amp; Host Telemetry</div>
         </div>
       </div>
 
@@ -411,9 +508,9 @@
         </div>
       </div>
 
-      <!-- 4 COLOR-CODED METRIC CARDS WITH LARGE ICONS -->
+      <!-- 4 GLASSMORPHISM METRIC CARDS WITH DISTINCT COLORS & LARGE ICONS -->
       <div class="metrics-row">
-        <!-- 1. CPU (Blue) -->
+        <!-- 1. CPU (Ashoka Navy) -->
         <div class="metric-glass metric-cpu">
           <div class="large-icon-box icon-cpu" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -429,7 +526,7 @@
           </div>
         </div>
 
-        <!-- 2. Memory (Purple) -->
+        <!-- 2. Memory (India Green) -->
         <div class="metric-glass metric-mem">
           <div class="large-icon-box icon-mem" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -448,7 +545,7 @@
           </div>
         </div>
 
-        <!-- 3. Disk (Saffron / Amber) -->
+        <!-- 3. Disk (Kesari Saffron) -->
         <div class="metric-glass metric-disk">
           <div class="large-icon-box icon-disk" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -466,7 +563,7 @@
           </div>
         </div>
 
-        <!-- 4. Network (Peacock Teal) -->
+        <!-- 4. Network (Tiranga Deep Teal-Green) -->
         <div class="metric-glass metric-net">
           <div class="large-icon-box icon-net" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -517,15 +614,15 @@
     </section>
 
     <section id="panel-payload" class="view-panel">
-      <div class="glass-panel">
-        <h2>Live /telemetry.json Payload</h2>
+      <div class="json-glass-card">
+        <h2 style="font-size:1.04rem;font-weight:700;color:var(--ashoka-navy);margin-bottom:0.85rem;">Live /telemetry.json Payload</h2>
         <pre class="json-stream" id="rawJsonPre">Loading telemetry...</pre>
       </div>
     </section>
   </main>
 
   <footer>
-    AetherGrid 2026 • CPU, Memory, Disk &amp; Network Telemetry Console • NGINX Alpine + GHCR
+    AetherGrid 2026 • Bharat Glass Telemetry Console • NGINX Alpine + GHCR
   </footer>
 
   <script>
