@@ -6,7 +6,7 @@ COPY index.html /usr/share/nginx/html/index.html
 COPY README.md /usr/share/nginx/html/README.md
 COPY 10-telemetry.sh /docker-entrypoint.d/10-telemetry.sh
 
-RUN chmod +x /docker-entrypoint.d/10-telemetry.sh
+RUN sed -i 's/\r$//' /docker-entrypoint.d/10-telemetry.sh && chmod +x /docker-entrypoint.d/10-telemetry.sh
 
 EXPOSE 80
 

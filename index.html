@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aditi, Diti &amp; Danu Compendium + Live Runtime Telemetry</title>
+  <title>Aditi, Diti &amp; Danu + System Telemetry</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg-canvas: #f4f6fc;
-      --bg-glass: rgba(255, 255, 255, 0.88);
+      --bg-glass: rgba(255, 255, 255, 0.9);
       --royal-navy: #0f172a;
       --royal-blue: #1e3a8a;
       --royal-purple: #5b21b6;
@@ -22,7 +22,6 @@
       --border-glass: rgba(30, 58, 138, 0.14);
       --shadow-card: 0 12px 32px rgba(15, 23, 42, 0.08);
       --radius-lg: 16px;
-      --radius-md: 11px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,9 +42,8 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-glass);
     }
 
@@ -73,7 +71,6 @@
       font-family: "Cinzel", serif;
       font-weight: 800;
       font-size: 1.05rem;
-      box-shadow: 0 5px 14px rgba(30, 58, 138, 0.24);
     }
 
     .brand-title { font-family: "Cinzel", serif; font-size: 1.08rem; font-weight: 700; color: var(--royal-navy); }
@@ -111,15 +108,15 @@
       border-radius: 6px;
       font-size: 0.78rem;
       font-weight: 600;
-      background: rgba(5, 150, 105, 0.1);
+      background: rgba(5, 150, 105, 0.12);
       color: var(--emerald);
       border: 1px solid rgba(5, 150, 105, 0.25);
     }
 
-    .status-badge.offline {
-      background: rgba(217, 119, 6, 0.12);
+    .status-badge.warn {
+      background: rgba(217, 119, 6, 0.14);
       color: var(--gold);
-      border-color: rgba(217, 119, 6, 0.28);
+      border-color: rgba(217, 119, 6, 0.3);
     }
 
     .pulse-dot {
@@ -166,7 +163,7 @@
       margin-bottom: 0.65rem;
     }
 
-    .hero-banner h1 { font-family: "Cinzel", serif; font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin-bottom: 0.45rem; }
+    .hero-banner h1 { font-family: "Cinzel", serif; font-size: clamp(1.45rem, 2.5vw, 2.05rem); margin-bottom: 0.45rem; }
     .hero-banner p { color: #cbd5e1; font-size: 0.94rem; }
 
     .controls-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.1rem; }
@@ -175,7 +172,7 @@
       padding: 0.6rem 0.85rem;
       border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.25);
-      background: rgba(255, 255, 255, 0.95);
+      background: #fff;
       color: var(--royal-navy);
       font-family: inherit;
       font-size: 0.9rem;
@@ -190,8 +187,8 @@
     }
 
     .meta-box {
-      background: rgba(255, 255, 255, 0.09);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 10px;
       padding: 0.75rem 0.9rem;
     }
@@ -209,41 +206,6 @@
       font-size: 0.88rem;
       color: #fff;
       word-break: break-all;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.35rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .glass-card {
-      background: var(--bg-glass);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-art { height: 155px; }
-    .card-art svg { width: 100%; height: 100%; display: block; }
-
-    .card-body { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
-    .card-title-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem; }
-    .card-title-row h2 { font-family: "Cinzel", serif; font-size: 1.18rem; color: var(--royal-navy); }
-    .sanskrit { font-size: 0.86rem; font-weight: 600; color: var(--gold); }
-    .lineage-sub { font-size: 0.8rem; font-weight: 600; color: var(--royal-purple); margin-bottom: 0.65rem; }
-    .card-text { font-size: 0.9rem; color: var(--text-main); margin-bottom: 0.9rem; flex: 1; }
-    .notable-box {
-      background: rgba(30, 58, 138, 0.04);
-      border-left: 3px solid var(--saffron);
-      padding: 0.55rem 0.75rem;
-      border-radius: 0 7px 7px 0;
-      font-size: 0.82rem;
     }
 
     .kpi-grid {
@@ -285,6 +247,47 @@
     table.spec-tbl td:first-child { color: var(--text-muted); width: 42%; }
     table.spec-tbl td:last-child { font-family: "IBM Plex Mono", monospace; font-weight: 600; color: var(--royal-navy); text-align: right; }
 
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .glass-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-banner {
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding: 0.75rem;
+    }
+
+    .card-body { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
+    .card-title-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem; }
+    .card-title-row h2 { font-family: "Cinzel", serif; font-size: 1.15rem; color: var(--royal-navy); }
+    .sanskrit { font-size: 0.86rem; font-weight: 600; color: var(--gold); }
+    .lineage-sub { font-size: 0.8rem; font-weight: 600; color: var(--royal-purple); margin-bottom: 0.6rem; }
+    .card-text { font-size: 0.9rem; color: var(--text-main); margin-bottom: 0.9rem; flex: 1; }
+    .notable-box {
+      background: rgba(30, 58, 138, 0.04);
+      border-left: 3px solid var(--saffron);
+      padding: 0.55rem 0.75rem;
+      border-radius: 0 7px 7px 0;
+      font-size: 0.82rem;
+    }
+
     pre.json-pre {
       margin-top: 1.35rem;
       background: #0f172a;
@@ -302,7 +305,7 @@
       font-size: 0.82rem;
       color: var(--text-muted);
       border-top: 1px solid var(--border-glass);
-      background: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.7);
     }
 
     @media (max-width: 880px) {
@@ -326,52 +329,51 @@
         <button class="mode-tab" data-view="mythology">Devas, Daityas &amp; Danavas</button>
       </div>
 
-      <span id="liveBadge" class="status-badge">
+      <span id="liveBadge" class="status-badge warn">
         <span class="pulse-dot"></span>
-        <span id="liveLabel">Syncing...</span>
+        <span id="liveLabel">Initializing...</span>
       </span>
     </div>
   </header>
 
   <main>
-    <!-- VIEW 1: LIVE SYSTEM & CONTAINER TELEMETRY -->
     <section id="view-telemetry" class="view-section active">
       <div class="hero-banner">
         <div>
           <span class="banner-tag" id="rtTag">Container / Host Runtime</span>
           <h1 id="rtHeadline">Inspecting Execution Environment</h1>
-          <p id="rtDesc">Reads live /proc, cgroup, kernel, storage, and network metadata generated by 10-telemetry.sh inside the container.</p>
+          <p id="rtDesc">Displays live Linux kernel, CPU, cgroup, disk, and network data from /telemetry.json plus client browser specs.</p>
         </div>
         <div class="meta-grid-4">
-          <div class="meta-box"><span>Hostname / Container ID</span><strong id="mHost">—</strong></div>
-          <div class="meta-box"><span>Cloud / Environment</span><strong id="mCloud">—</strong></div>
-          <div class="meta-box"><span>Container IPv4</span><strong id="mIp">—</strong></div>
-          <div class="meta-box"><span>Last Sync (UTC)</span><strong id="mTs">—</strong></div>
+          <div class="meta-box"><span>Hostname / Container ID</span><strong id="mHost">Pending</strong></div>
+          <div class="meta-box"><span>Cloud / Environment</span><strong id="mCloud">Pending</strong></div>
+          <div class="meta-box"><span>Container IPv4</span><strong id="mIp">Pending</strong></div>
+          <div class="meta-box"><span>Last Sync (UTC)</span><strong id="mTs">Pending</strong></div>
         </div>
       </div>
 
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="kpi-label">Compute Topology</div>
-          <div class="kpi-val" id="kCores">—</div>
-          <div class="kpi-sub" id="kQuota">Quota: —</div>
+          <div class="kpi-val" id="kCores">0 vCPUs</div>
+          <div class="kpi-sub" id="kQuota">Quota: Checking...</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Memory Usage</div>
-          <div class="kpi-val" id="kMem">—</div>
-          <div class="kpi-sub" id="kMemSub">of — MB</div>
+          <div class="kpi-val" id="kMem">0 MB</div>
+          <div class="kpi-sub" id="kMemSub">of 0 MB</div>
           <div class="bar-track"><div class="bar-fill" id="bMem" style="width:0%"></div></div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Root Volume Disk</div>
-          <div class="kpi-val" id="kDisk">—</div>
-          <div class="kpi-sub" id="kDiskSub">of — MB</div>
+          <div class="kpi-val" id="kDisk">0 MB</div>
+          <div class="kpi-sub" id="kDiskSub">of 0 MB</div>
           <div class="bar-track"><div class="bar-fill" id="bDisk" style="width:0%"></div></div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">HTTP Probe Latency</div>
-          <div class="kpi-val" id="kLat">—</div>
-          <div class="kpi-sub" id="kLoad">Load: —</div>
+          <div class="kpi-val" id="kLat">0 ms</div>
+          <div class="kpi-sub" id="kLoad">Load: 0.00, 0.00, 0.00</div>
         </div>
       </div>
 
@@ -404,10 +406,9 @@
         </div>
       </div>
 
-      <pre class="json-pre" id="jsonDump">Loading /telemetry.json...</pre>
+      <pre class="json-pre" id="jsonDump">Waiting for telemetry...</pre>
     </section>
 
-    <!-- VIEW 2: DEVAS, DAITYAS & DANAVAS -->
     <section id="view-mythology" class="view-section">
       <div class="hero-banner">
         <div>
@@ -439,47 +440,49 @@
   </main>
 
   <footer>
-    Combined Puranic Compendium &amp; Live Container/Host Telemetry • Served via NGINX Alpine &amp; GHCR
+    Combined Puranic Compendium &amp; Live Container/Host Telemetry • NGINX Alpine &amp; GHCR
   </footer>
 
   <script>
-    // Top-level view switching
+    function setText(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = String(val);
+    }
+
     document.querySelectorAll(".mode-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".mode-tab").forEach((b) => b.classList.remove("active"));
         document.querySelectorAll(".view-section").forEach((s) => s.classList.remove("active"));
         btn.classList.add("active");
-        document.getElementById(`view-${btn.dataset.view}`).classList.add("active");
+        const target = document.getElementById("view-" + btn.dataset.view);
+        if (target) target.classList.add("active");
       });
     });
 
-    // Mythology data (Aditi, Diti, Danu)
     const MYTH_ITEMS = [
-      { name: "Devas & Adityas", sk: "आदित्य / देव", mother: "Aditi", line: "Aditi & Sage Kashyapa", c1: "#1e3a8a", c2: "#d97706", sigil: "☀", desc: "Celestial guardians of cosmic order (rita) and light born of boundless Aditi.", notable: "Indra, Surya, Varuna, Mitra, Vamana" },
-      { name: "Daityas", sk: "दैत्य", mother: "Diti", line: "Diti & Sage Kashyapa", c1: "#5b21b6", c2: "#b45309", sigil: "✦", desc: "Mighty rulers and ascetics born of Diti, famed for intense tapasya and devotion.", notable: "Hiranyakashipu, Hiranyaksha, Prahlada, Mahabali" },
-      { name: "Danavas", sk: "दानव", mother: "Danu", line: "Danu & Sage Kashyapa", c1: "#141c3a", c2: "#6d28d9", sigil: "◈", desc: "Descendants of Danu known for mastery of illusion (maya) and grand architecture.", notable: "Maya Danava, Viprachitti, Vritra, Shambara" },
-      { name: "Maruts", sk: "मरुत", mother: "Diti", line: "Diti's Embryo Transformed", c1: "#1d4ed8", c2: "#0f766e", sigil: "❖", desc: "Forty-nine storm and wind deities arising from Diti's purified lineage.", notable: "Tempest & Wind Deities allied with Indra" },
-      { name: "Danava Councils", sk: "दानव गण", mother: "Danu", line: "Danu & Sage Kashyapa", c1: "#312e81", c2: "#92400e", sigil: "✵", desc: "Strategic leaders and coalitions of Danavas across epic and Puranic narratives.", notable: "Viprachitti, Namuchi, Puloman" },
-      { name: "Aditi Cosmic Mother", sk: "अदिति", mother: "Aditi", line: "Primeval Mother of Devas", c1: "#1e3a8a", c2: "#b45309", sigil: "ॐ", desc: "Revered in the Vedas and Puranas as vast cosmic space and maternal nurture.", notable: "Mother of the Adityas & Vamana" }
+      { name: "Devas & Adityas", sk: "आदित्य / देव", mother: "Aditi", line: "Aditi & Sage Kashyapa", bg: "linear-gradient(135deg,#1e3a8a,#d97706)", sigil: "☀", desc: "Celestial guardians of cosmic order (rita) and light born of boundless Aditi.", notable: "Indra, Surya, Varuna, Mitra, Vamana" },
+      { name: "Daityas", sk: "दैत्य", mother: "Diti", line: "Diti & Sage Kashyapa", bg: "linear-gradient(135deg,#5b21b6,#b45309)", sigil: "✦", desc: "Mighty rulers and ascetics born of Diti, famed for intense tapasya and devotion.", notable: "Hiranyakashipu, Hiranyaksha, Prahlada, Mahabali" },
+      { name: "Danavas", sk: "दानव", mother: "Danu", line: "Danu & Sage Kashyapa", bg: "linear-gradient(135deg,#141c3a,#6d28d9)", sigil: "◈", desc: "Descendants of Danu known for mastery of illusion (maya) and grand architecture.", notable: "Maya Danava, Viprachitti, Vritra, Shambara" },
+      { name: "Maruts", sk: "मरुत", mother: "Diti", line: "Diti's Embryo Transformed", bg: "linear-gradient(135deg,#1d4ed8,#0f766e)", sigil: "❖", desc: "Forty-nine storm and wind deities arising from Diti's purified lineage.", notable: "Tempest & Wind Deities allied with Indra" },
+      { name: "Danava Councils", sk: "दानव गण", mother: "Danu", line: "Danu & Sage Kashyapa", bg: "linear-gradient(135deg,#312e81,#92400e)", sigil: "✵", desc: "Strategic leaders and coalitions of Danavas across epic and Puranic narratives.", notable: "Viprachitti, Namuchi, Puloman" },
+      { name: "Aditi Cosmic Mother", sk: "अदिति", mother: "Aditi", line: "Primeval Mother of Devas", bg: "linear-gradient(135deg,#1e3a8a,#b45309)", sigil: "ॐ", desc: "Revered in the Vedas and Puranas as vast cosmic space and maternal nurture.", notable: "Mother of the Adityas & Vamana" }
     ];
 
     function renderMyth() {
-      const q = document.getElementById("mythSearch").value.trim().toLowerCase();
-      const m = document.getElementById("mythFilter").value;
+      const q = (document.getElementById("mythSearch")?.value || "").trim().toLowerCase();
+      const m = document.getElementById("mythFilter")?.value || "all";
       const list = MYTH_ITEMS.filter((x) => {
         const okM = m === "all" || x.mother === m;
-        const okQ = !q || `${x.name}${x.sk} ${x.mother}${x.line} ${x.desc}${x.notable}`.toLowerCase().includes(q);
+        const okQ = !q || (x.name + " " + x.sk + " " + x.mother + " " + x.line + " " + x.desc + " " + x.notable).toLowerCase().includes(q);
         return okM && okQ;
       });
-      document.getElementById("mythGrid").innerHTML = list.map((x) => `
+      const grid = document.getElementById("mythGrid");
+      if (!grid) return;
+      grid.innerHTML = list.map((x) => `
         <article class="glass-card">
-          <div class="card-art">
-            <svg viewBox="0 0 600 220" preserveAspectRatio="xMidYMid slice">
-              <defs><linearGradient id="g-${x.sk.replace(/\s+/g, '')}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${x.c1}"/><stop offset="100%" stop-color="${x.c2}"/></linearGradient></defs>
-              <rect width="600" height="220" fill="url(#g-${x.sk.replace(/\s+/g, '')})"/>
-              <text x="300" y="102" text-anchor="middle" fill="#fde68a" font-size="38">${x.sigil}</text>
-              <text x="300" y="158" text-anchor="middle" fill="#fff" font-family="Georgia,serif" font-size="24" font-weight="bold">${x.sk}</text>
-            </svg>
+          <div class="card-banner" style="background:${x.bg}">
+            <div style="font-size:2rem;line-height:1">${x.sigil}</div>
+            <div style="font-family:Georgia,serif;font-size:1.25rem;font-weight:bold;margin-top:0.25rem">${x.sk}</div>
           </div>
           <div class="card-body">
             <div class="card-title-row"><h2>${x.name}</h2><span class="sanskrit">${x.sk}</span></div>
@@ -491,29 +494,116 @@
       `).join("");
     }
 
-    document.getElementById("mythSearch").addEventListener("input", renderMyth);
-    document.getElementById("mythFilter").addEventListener("change", renderMyth);
-    renderMyth();
+    function populateClientSpecs() {
+      setText("cCores", navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " cores" : "Not reported");
+      setText("cMem", navigator.deviceMemory ? "~" + navigator.deviceMemory + " GB" : "Not reported");
+      setText("cView", window.innerWidth + "x" + window.innerHeight);
+      setText("cUrl", window.location.href);
+      try {
+        const canvas = document.createElement("canvas");
+        const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        if (!gl) {
+          setText("cGpu", "Unavailable");
+          return;
+        }
+        const ext = gl.getExtension("WEBGL_debug_renderer_info");
+        const gpu = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+        setText("cGpu", gpu || "WebGL Active");
+      } catch (e) {
+        setText("cGpu", "Restricted");
+      }
+    }
 
-    // Client hardware probe
-    document.getElementById("cCores").textContent = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} cores` : "N/A";
-    document.getElementById("cMem").textContent = navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : "N/A"; document.getElementById("cView").textContent = `${window.innerWidth}x${window.innerHeight}`; document.getElementById("cUrl").textContent = window.location.href; try { const c = document.createElement("canvas"); const gl = c.getContext("webgl") \vert{}\vert{} c.getContext("experimental-webgl"); const ext = gl && gl.getExtension("WEBGL_debug_renderer_info"); document.getElementById("cGpu").textContent = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : "WebGL"; } catch { document.getElementById("cGpu").textContent = "N/A"; }  function fmtUp(s) { s = Number(s) \vert{}\vert{} 0; const h = Math.floor(s / 3600), m = Math.floor((s \% 3600) / 60); return `${h}h ${m}m (${s}s)`;
+    function fmtUp(s) {
+      s = Number(s) || 0;
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      return h + "h " + m + "m (" + s + "s)";
+    }
+
+    function applyData(d, ms, isLive) {
+      const badge = document.getElementById("liveBadge");
+      if (badge) {
+        badge.classList.toggle("warn", !isLive);
+      }
+      setText("liveLabel", isLive ? "Live Telemetry" : "Fallback Mode");
+      setText("rtTag", d.runtimeMode || "Container Runtime");
+      setText("rtHeadline", (d.osPrettyName || "Linux") + " (" + (d.architecture || "x86_64") + ")");
+      setText("mHost", d.hostname || "localhost");
+      setText("mCloud", d.cloudEnvironment || "Local");
+      setText("mIp", d.containerIp || "127.0.0.1");
+      setText("mTs", d.timestampUtc || new Date().toISOString());
+
+      const cpu = d.cpu || {};
+      const mem = d.memory || {};
+      const stg = d.storage || {};
+
+      setText("kCores", (cpu.cores || 1) + " vCPUs");
+      setText("kQuota", "Quota: " + (cpu.cgroupQuota || "Host"));
+
+      const totalMem = Number(mem.totalMb) || 0;
+      const usedMem = Number(mem.usedMb) || 0;
+      const mp = totalMem > 0 ? Math.min(100, Math.round((usedMem / totalMem) * 100)) : 0;
+      setText("kMem", usedMem + " MB");
+      setText("kMemSub", "of " + totalMem + " MB (" + mp + "%)");
+      const bMem = document.getElementById("bMem");
+      if (bMem) bMem.style.width = mp + "%";
+
+      const totalDisk = Number(stg.totalMb) || 0;
+      const usedDisk = Number(stg.usedMb) || 0;
+      const dp = Number(stg.usedPercent) || (totalDisk > 0 ? Math.min(100, Math.round((usedDisk / totalDisk) * 100)) : 0);
+      setText("kDisk", usedDisk + " MB");
+      setText("kDiskSub", "of " + totalDisk + " MB (" + dp + "%)");
+      const bDisk = document.getElementById("bDisk");
+      if (bDisk) bDisk.style.width = dp + "%";
+
+      setText("kLat", ms + " ms");
+      setText("kLoad", "Load: " + (cpu.loadAverage || "0.00, 0.00, 0.00"));
+
+      setText("sMode", d.runtimeMode || "—");
+      setText("sOs", d.osPrettyName || "—");
+      setText("sKernel", (d.kernel || "—") + " / " + (d.architecture || "—"));
+      setText("sCpuModel", cpu.model || "—");
+      setText("sCgMem", mem.cgroupLimit || "—");
+      setText("sUptime", fmtUp(d.uptimeSeconds));
+      setText("sNginx", d.webServer || "nginx");
+      setText("jsonDump", JSON.stringify(d, null, 2));
     }
 
     async function pollTelemetry() {
       const t0 = performance.now();
       try {
-        const r = await fetch(`/telemetry.json?t=${Date.now()}`, { cache: "no-store" }); const ms = Math.max(1, Math.round(performance.now() - t0)); if (!r.ok) throw new Error("missing"); const d = await r.json(); document.getElementById("liveBadge").classList.remove("offline"); document.getElementById("liveLabel").textContent = "Live Container Telemetry"; document.getElementById("rtTag").textContent = d.runtimeMode; document.getElementById("rtHeadline").textContent = `${d.osPrettyName} (${d.architecture})`; document.getElementById("mHost").textContent = d.hostname; document.getElementById("mCloud").textContent = d.cloudEnvironment; document.getElementById("mIp").textContent = d.containerIp; document.getElementById("mTs").textContent = d.timestampUtc; document.getElementById("kCores").textContent = `${d.cpu.cores} vCPUs`;
-        document.getElementById("kQuota").textContent = `Quota: ${d.cpu.cgroupQuota}`; const mp = d.memory.totalMb ? Math.min(100, Math.round((d.memory.usedMb / d.memory.totalMb) * 100)) : 0; document.getElementById("kMem").textContent = `${d.memory.usedMb} MB`;
-        document.getElementById("kMemSub").textContent = `of ${d.memory.totalMb} MB (${mp}%)`;
-        document.getElementById("bMem").style.width = `${mp}\%`; const dp = Number(d.storage.usedPercent) \vert{}\vert{} 0; document.getElementById("kDisk").textContent = `${d.storage.usedMb} MB`;
-        document.getElementById("kDiskSub").textContent = `of ${d.storage.totalMb} MB (${dp}%)`;
-        document.getElementById("bDisk").style.width = `${dp}\%`; document.getElementById("kLat").textContent = `${ms} ms`;
-        document.getElementById("kLoad").textContent = `Load: ${d.cpu.loadAverage}`; document.getElementById("sMode").textContent = d.runtimeMode; document.getElementById("sOs").textContent = d.osPrettyName; document.getElementById("sKernel").textContent = `${d.kernel} / ${d.architecture}`; document.getElementById("sCpuModel").textContent = d.cpu.model; document.getElementById("sCgMem").textContent = d.memory.cgroupLimit; document.getElementById("sUptime").textContent = fmtUp(d.uptimeSeconds); document.getElementById("sNginx").textContent = d.webServer; document.getElementById("jsonDump").textContent = JSON.stringify(d, null, 2); } catch { const ms = Math.max(1, Math.round(performance.now() - t0)); document.getElementById("liveBadge").classList.add("offline"); document.getElementById("liveLabel").textContent = "Static Mode (Add 10-telemetry.sh)"; document.getElementById("kLat").textContent = `${ms} ms`;
-        document.getElementById("jsonDump").textContent = "telemetry.json not found yet — ensure 10-telemetry.sh is copied into /docker-entrypoint.d/ in Dockerfile.";
+        const r = await fetch("/telemetry.json?t=" + Date.now(), { cache: "no-store" });
+        const ms = Math.max(1, Math.round(performance.now() - t0));
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const d = await r.json();
+        applyData(d, ms, true);
+      } catch (err) {
+        const ms = Math.max(1, Math.round(performance.now() - t0));
+        applyData({
+          timestampUtc: new Date().toISOString(),
+          runtimeMode: "Fallback (telemetry.json not yet served)",
+          cloudEnvironment: "Browser / Local",
+          hostname: window.location.hostname || "localhost",
+          containerIp: "127.0.0.1",
+          osPrettyName: navigator.platform || "Client",
+          architecture: "x86_64",
+          kernel: "N/A",
+          webServer: "nginx",
+          cpu: { model: "N/A", cores: navigator.hardwareConcurrency || 2, cgroupQuota: "N/A", loadAverage: "0.00, 0.00, 0.00" },
+          memory: { totalMb: (navigator.deviceMemory || 4) * 1024, usedMb: 512, cgroupLimit: "N/A" },
+          storage: { totalMb: 10000, usedMb: 1200, usedPercent: 12 },
+          uptimeSeconds: Math.floor(performance.now() / 1000),
+          note: "Check that 10-telemetry.sh and Dockerfile are committed and the container was recreated from :latest."
+        }, ms, false);
       }
     }
 
+    document.getElementById("mythSearch")?.addEventListener("input", renderMyth);
+    document.getElementById("mythFilter")?.addEventListener("change", renderMyth);
+
+    renderMyth();
+    populateClientSpecs();
     pollTelemetry();
     setInterval(pollTelemetry, 5000);
   </script>
